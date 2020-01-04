@@ -16,9 +16,24 @@ Leap For Wanikani is available for download on the [Google Play Store]().
 ## Technical
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
+### Fragment (Make Request)
+
+### ViewModel
+
+### Repository
+#### E-tags
+
+### Remote
+
+### Local
+
+### Fragment (Observe Response)
+
 <!-- ROADMAP -->
 ## Roadmap
 See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a list of proposed features (and known issues).
+
+See the [CHANGELOG]() for a summary of recent changes.
 
 <!-- CONTRIBUTING -->
 ## Contributing
