@@ -39,7 +39,7 @@ fun refreshData() {
 ```
 
 ### Repository
-The Repository layer is reponsible for returning local or remote data.
+The Repository layer is reponsible for returning local or remote data. Note that `WKApiResponse.ApiNotModified` returns local data. (See E-tags and Conditional Requests)
 
 ```
     override suspend fun getSummary(): LeapResult<WKReport.Summary> {
@@ -81,14 +81,14 @@ The Repository layer is reponsible for returning local or remote data.
 ```
 
 #### Remote
-`WKRemoteDataSource` wraps a retrofit `Response` into as `WKApiResponse` depending on the modified/not modified response.
+`WKRemoteDataSource` wraps a retrofit `Response` with `WKApiResponse` to handle modified/not modified API responses.
 ```
 interface WKRemoteDataSource {
     suspend fun getSummaryAsync(): WKApiResponse<WKReport.Summary>
 }
 ```
 
-Retrofit API responsible for network requests.
+The Retrofit `WaniKaniApi` implements network requests.
 ```
 interface WaniKaniApi {
     @GET("summary")
@@ -97,8 +97,20 @@ interface WaniKaniApi {
 ```
 
 #### Local
+Async requests to a Room database are routed through `WKLocalDataSource` using `suspend` functions.
+```
+interface WKLocalDataSource {
+    suspend fun getSummary(): LeapResult<WKReport.Summary>
+}
+```
 
-##### E-tags
+```
+interface WKReportDao {
+    @Query("SELECT * FROM summary")
+    suspend fun getSummary(): WKReport.Summary?
+```
+
+##### E-tags and Conditional Requests
 The WaniKani API supports [conditional requests](https://docs.api.wanikani.com/20170710/#best-practices) with e-tags to determine whether or not a user's data has changed since the last time they made a reponse. 
 
 If their data has not changed, a `304 Not Modified` response is returned to the app which significantly reduces mobile network usage by eliminating unecessary downloads.
@@ -113,6 +125,34 @@ The `LiveData<Summary` emits changes when the local or remote data source is tri
 ```
 
 ### Fragment (Observe Response)
+The `DashboardFragment` observes the `LiveData<Summary` and reacts when a new summary is emitted. It updates the UI based on a `LeapResult.Success`,`LeapResult.Error`, `LeapResult.Loading`, or `LeapResult.Offline` response so that a user's state is accurately represented.
+
+```
+dashboardViewModel.liveDataSummary.observe(viewLifecycleOwner, Observer { summary ->
+            when (summary) {
+                is LeapResult.Success<WKReport.Summary> -> {
+                    // Lessons are grouped by the hour.
+                    // [0] are the lessons available now, [1] are the lessons in an hour, etc. 24 hours provided.
+                    adapter.bindAvailableStatus(availableStatus, summary.resultData.data.next_reviews_at)
+                    adapter.bindLessonsCount(lessonsCardView, summary.resultData.data.lessons[0].subject_ids.size)
+                    adapter.bindReviewsCount(reviewsCardView, summary.resultData.data.reviews[0].subject_ids.size)
+                    progressBar.visibility = View.VISIBLE
+                }
+                is LeapResult.Error -> {
+                    progressBar.visibility = View.GONE
+                    adapter.bindAvailableStatus(availableStatus, null)
+                    adapter.bindLessonsCount(lessonsCardView, 0)
+                    adapter.bindReviewsCount(reviewsCardView, 0)
+                }
+                is LeapResult.Loading -> {
+                    progressBar.visibility = View.VISIBLE
+                }
+                is LeapResult.Offline -> {
+                    progressBar.visibility = View.GONE
+                }
+            }
+        })
+```
 
 <!-- ROADMAP -->
 ## Roadmap
