@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <!-- A Constraint Layout keeps the layout hierarchy flat and prevent overdraw -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- These guidelines create the WaniKani-style grid-column box that all views will align to -->
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/stage_progress_vertical_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent=".50" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/stage_progress_33_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent=".33" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/stage_progress_66_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent=".66" />
+
+        <!-- The generic background View's will be drawn behind the text, so they must be declared first -->
+        <View
+            android:id="@+id/apprentice_background"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/wkPink"
+            app:layout_constraintBottom_toTopOf="@+id/stage_progress_33_guideline"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/stage_progress_vertical_guideline"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/guru_background"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/wkPurple"
+            app:layout_constraintBottom_toTopOf="@+id/stage_progress_33_guideline"
+            app:layout_constraintLeft_toRightOf="@id/stage_progress_vertical_guideline"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/master_background"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/wkDarkBlue"
+            app:layout_constraintBottom_toTopOf="@+id/stage_progress_66_guideline"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/stage_progress_vertical_guideline"
+            app:layout_constraintTop_toTopOf="@id/stage_progress_33_guideline" />
+
+        <View
+            android:id="@+id/enlightened_background"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/wkBlue"
+            app:layout_constraintBottom_toTopOf="@+id/stage_progress_66_guideline"
+            app:layout_constraintLeft_toRightOf="@id/stage_progress_vertical_guideline"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/stage_progress_33_guideline" />
+
+        <View
+            android:id="@+id/burned_background"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/wkGrey"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/stage_progress_66_guideline" />
+
+        <!-- Content -->
+        <TextView
+            android:id="@+id/apprentice_count"
+            style="@style/Dashboard.CardCount.Inverse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/apprentice_title"
+            app:layout_constraintLeft_toLeftOf="@+id/apprentice_title"
+            app:layout_constraintRight_toRightOf="@+id/apprentice_title"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="41" />
+
+        <TextView
+            android:id="@+id/apprentice_title"
+            style="@style/Dashboard.CardTitle.Inverse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/apprentice_title"
+            app:layout_constraintBottom_toTopOf="@+id/stage_progress_33_guideline"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/stage_progress_vertical_guideline"
+            app:layout_constraintTop_toBottomOf="@+id/apprentice_count" />
+
+        <TextView
+            android:id="@+id/guru_count"
+            style="@style/Dashboard.CardCount.Inverse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/guru_title"
+            app:layout_constraintLeft_toLeftOf="@+id/guru_title"
+            app:layout_constraintRight_toRightOf="@+id/guru_title"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="41" />
+
+        <TextView
+            android:id="@+id/guru_title"
+            style="@style/Dashboard.CardTitle.Inverse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/guru_title"
+            app:layout_constraintBottom_toTopOf="@+id/stage_progress_33_guideline"
+            app:layout_constraintLeft_toRightOf="@+id/stage_progress_vertical_guideline"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/guru_count" />
+
+        <TextView
+            android:id="@+id/master_count"
+            style="@style/Dashboard.CardCount.Inverse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/master_title"
+            app:layout_constraintLeft_toLeftOf="@+id/master_title"
+            app:layout_constraintRight_toRightOf="@+id/master_title"
+            app:layout_constraintTop_toBottomOf="@+id/stage_progress_33_guideline"
+            tools:text="41" />
+
+        <TextView
+            android:id="@+id/master_title"
+            style="@style/Dashboard.CardTitle.Inverse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/master_title"
+            app:layout_constraintBottom_toTopOf="@+id/stage_progress_66_guideline"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/stage_progress_vertical_guideline"
+            app:layout_constraintTop_toBottomOf="@+id/master_count" />
+
+        <TextView
+            android:id="@+id/enlightened_count"
+            style="@style/Dashboard.CardCount.Inverse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/enlightened_title"
+            app:layout_constraintLeft_toLeftOf="@+id/enlightened_title"
+            app:layout_constraintRight_toRightOf="@+id/enlightened_title"
+            app:layout_constraintTop_toBottomOf="@+id/stage_progress_33_guideline"
+            tools:text="41" />
+
+        <TextView
+            android:id="@+id/enlightened_title"
+            style="@style/Dashboard.CardTitle.Inverse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/enlightened"
+            app:layout_constraintBottom_toTopOf="@+id/stage_progress_66_guideline"
+            app:layout_constraintLeft_toRightOf="@+id/stage_progress_vertical_guideline"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/enlightened_count" />
+
+        <TextView
+            android:id="@+id/burned_count"
+            style="@style/Dashboard.CardCount.Inverse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/burned_title"
+            app:layout_constraintLeft_toLeftOf="@+id/burned_title"
+            app:layout_constraintRight_toRightOf="@+id/burned_title"
+            app:layout_constraintTop_toBottomOf="@+id/stage_progress_66_guideline"
+            tools:text="41" />
+
+        <TextView
+            android:id="@+id/burned_title"
+            style="@style/Dashboard.CardTitle.Inverse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/burned_title"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/burned_count" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

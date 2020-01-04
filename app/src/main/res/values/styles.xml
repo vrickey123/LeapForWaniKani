@@ -1,0 +1,85 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorSecondaryDark</item>
+        <item name="colorSecondary">@color/colorSecondary</item> <!-- FAB -->
+        <item name="materialAlertDialogTheme">@style/AlertDialogTheme</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.ActionBar"/>
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light"/>
+
+    <!-- Dashboard -->
+    <style name="Dashboard"></style>
+
+    <style name="Dashboard.Card" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="cardElevation">2dp</item>
+    </style>
+
+    <style name="Dashboard.Title">
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline4</item>
+    </style>
+
+    <style name="Dashboard.Subtitle" parent="">
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Subtitle1</item>
+    </style>
+
+    <style name="Dashboard.CardCount">
+        <item name="android:layout_marginTop">@dimen/dashboard_card_text_vertical_margin</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Subtitle1</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="Dashboard.CardCount.Inverse" parent="Dashboard.CardCount">
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Subtitle1.Inverse</item>
+    </style>
+
+    <style name="Dashboard.CardTitle">
+        <item name="android:layout_marginBottom">@dimen/dashboard_card_text_vertical_margin</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline6</item>
+    </style>
+
+    <style name="Dashboard.CardTitle.Inverse" parent="Dashboard.CardTitle">
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline6.Inverse</item>
+    </style>
+
+    <!-- Text Appearance -->
+    <style name="TextAppearance.MaterialComponents.Subtitle1.Inverse" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="android:textColor">?android:textColorPrimaryInverse</item>
+    </style>
+
+    <style name="TextAppearance.MaterialComponents.Headline4.Inverse" parent="TextAppearance.MaterialComponents.Headline4">
+        <item name="android:textColor">?android:textColorPrimaryInverse</item>
+    </style>
+
+    <style name="TextAppearance.MaterialComponents.Headline6.Inverse" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="android:textColor">?android:textColorPrimaryInverse</item>
+    </style>
+
+    <style name="TextAppearance.MaterialComponents.Body2.Inverse" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="android:textColor">?android:textColorPrimaryInverse</item>
+    </style>
+
+
+    <!-- Alert Dialogs -->
+    <style name="AlertDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="buttonBarPositiveButtonStyle">@style/Alert.Button.Positive</item>
+        <!--<item name="buttonBarNegativeButtonStyle">@style/Alert.Button.Neutral</item>-->
+        <!--<item name="buttonBarNeutralButtonStyle">@style/Alert.Button.Neutral</item>-->
+    </style>
+
+    <style name="Alert.Button.Positive" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="rippleColor">?android:colorAccent</item>
+        <item name="android:textColor">?android:textColorPrimary</item>
+    </style>
+
+</resources>
