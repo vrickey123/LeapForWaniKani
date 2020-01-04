@@ -1,4 +1,4 @@
-# LeapForWaniKani
+# Leap For WaniKani
 <!-- ABOUT -->
 ## About
 [WaniKani](https://www.wanikani.com/) is a Japanese-language-learning app that uses a Spaced Repitition System (SRS) to help users learn Japanese Kanji characters.
