@@ -19,15 +19,95 @@ The app follows Android's standard MVVM (Model View ViewModel) architecture and 
 Let's look at the data flow for a [Summary](https://docs.api.wanikani.com/20170710/#summary) that backs our lessons and reviews cards as well as push notifications.
 
 ### Fragment (Make Request)
+Make a request to refresh our data (summary, assignments, etc.) from `DashboardFragment#onResume`.
+```
+override fun onResume() {
+        super.onResume()
+        dashboardViewModel.refreshData()
+    }
+```
 
-### ViewModel
+### ViewModel (Make Request)
+Launch the request using the `DashboardViewModel#viewModelScope` that will cancel the coroutine automatically once the ViewModel's lifecycle owner (the Fragment) is destroyed.
+```
+fun refreshData() {
+        viewModelScope.launch {
+            _summary.value = waniKaniRepository.getSummary()
+            ...
+        }
+    }
+```
 
 ### Repository
-#### E-tags
+The Repository layer is reponsible for returning local or remote data.
 
-### Remote
+```
+    override suspend fun getSummary(): LeapResult<WKReport.Summary> {
+        return withContext(ioDispatcher) {
+            return@withContext fetchSummaryRemoteOrLocal()
+        }
+    }
+    
+      private suspend fun fetchSummaryRemoteOrLocal(): LeapResult<WKReport.Summary> {
+        val remoteSummary = wkRemoteDataSource.getSummaryAsync()
+        when (remoteSummary) {
+            is WKApiResponse.ApiError -> Log.w(TAG, "Remote summary source fetch failed")
+            is WKApiResponse.ApiNotModified -> {
+                return getSummaryFromLocal()
+            }
+            is WKApiResponse.ApiSuccess -> {
+                refreshLocalSummary(remoteSummary.responseData)
+                return LeapResult.Success(remoteSummary.responseData)
+            }
+            is WKApiResponse.NoConnection -> {
+                return LeapResult.Offline
+            }
+            else -> throw IllegalStateException()
+        }
 
-### Local
+        // Local if remote fails
+        val localSummary = getSummaryFromLocal()
+        if (localSummary is LeapResult.Success) return localSummary
+        return LeapResult.Error(Exception("ApiError fetching summary from remote and local"))
+    }
+
+    private suspend fun getSummaryFromLocal(): LeapResult<WKReport.Summary> {
+        return wkLocalDataSource.getSummary()
+    }
+
+    private suspend fun getSummaryRemote(): WKApiResponse<WKReport.Summary> {
+        return wkRemoteDataSource.getSummaryAsync()
+    }
+```
+
+#### Remote
+`WKRemoteDataSource` wraps a retrofit `Response` into as `WKApiResponse` depending on the modified/not modified response.
+```
+interface WKRemoteDataSource {
+    suspend fun getSummaryAsync(): WKApiResponse<WKReport.Summary>
+}
+```
+
+Retrofit API responsible for network requests.
+```
+interface WaniKaniApi {
+    @GET("summary")
+    suspend fun getSummaryAsync():Response<WKReport.Summary>
+}
+```
+
+#### Local
+
+##### E-tags
+
+### ViewModel (Observe Request)
+The `LiveData<Summary` emits changes when the local or remote data source is triggered.
+```
+    val liveDataSummary: LiveData<LeapResult<WKReport.Summary>> =
+        liveData {
+            emitSource(_summary)
+        }
+```
 
 ### Fragment (Observe Response)
 
