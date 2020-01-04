@@ -40,7 +40,7 @@ Distributed under the GNU General Public License.
 
 In short, this copyleft lisence allows you to use this code in your app as long as you also distribute it as a free and open-source project under the same license. If you are Tofugu/WaniKani and would like to use it, please contact us.
 
-See `LICENSE` for more information.
+See [LICENSE](https://github.com/vrickey123/LeapForWaniKani/blob/feature/readme/LICENSE.md) for more information.
 
 <!-- CONTACT -->
 ## Contact
