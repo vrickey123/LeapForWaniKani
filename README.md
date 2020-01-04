@@ -99,6 +99,9 @@ interface WaniKaniApi {
 #### Local
 
 ##### E-tags
+The WaniKani API supports [conditional requests](https://docs.api.wanikani.com/20170710/#best-practices) with e-tags to determine whether or not a user's data has changed since the last time they made a reponse. 
+
+If their data has not changed, a `304 Not Modified` response is returned to the app which significantly reduces mobile network usage by eliminating unecessary downloads.
 
 ### ViewModel (Observe Request)
 The `LiveData<Summary` emits changes when the local or remote data source is triggered.
