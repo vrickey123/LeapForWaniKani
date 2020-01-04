@@ -36,7 +36,11 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 <!-- LICENSE -->
 ## License
-Distributed under the MIT License. See `LICENSE` for more information.
+Distributed under the GNU General Public License. 
+
+In short, this copyleft lisence allows you to use this code in your app as long as you also distribute it as a free and open-source project under the same license. If you are Tofugu/WaniKani and would like to use it, please contact us.
+
+See `LICENSE` for more information.
 
 <!-- CONTACT -->
 ## Contact
