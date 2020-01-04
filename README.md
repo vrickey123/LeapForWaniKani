@@ -3,14 +3,14 @@
 ## About
 [WaniKani](https://www.wanikani.com/) is a Japanese-language-learning app that uses a Spaced Repitition System (SRS) to help users learn Japanese Kanji characters.
 
-WaniKani Reminders is an open-source app developed by the community with three main features:
+Leap For Wanikani is an open-source app developed by the community with three main features:
 
 1. A Dashboard that syncs your current WaniKani lessons and reviews status to your device
 2. Push notifications that alert you if you have pending lessons or reviews in your queue
 3. An in-app browser that takes you directly to your lessons or reviews then back to the app's Dashboard
 
 ### Google Play
-WaniKani Reminders is available for download on the [Google Play Store]().
+Leap For Wanikani is available for download on the [Google Play Store]().
 
 <!-- USAGE EXAMPLES -->
 ## Technical
