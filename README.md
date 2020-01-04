@@ -38,7 +38,7 @@ fun refreshData() {
     }
 ```
 
-### Repository
+### Repository (Get Local or Remote)
 The Repository layer is reponsible for returning local or remote data. Note that `WKApiResponse.ApiNotModified` returns local data. (See E-tags and Conditional Requests)
 
 ```
@@ -115,7 +115,7 @@ The WaniKani API supports [conditional requests](https://docs.api.wanikani.com/2
 
 If their data has not changed, a `304 Not Modified` response is returned to the app which significantly reduces mobile network usage by eliminating unecessary downloads.
 
-### ViewModel (Observe Request)
+### ViewModel (Observe Response)
 The `LiveData<Summary` emits changes when the local or remote data source is triggered.
 ```
     val liveDataSummary: LiveData<LeapResult<WKReport.Summary>> =
