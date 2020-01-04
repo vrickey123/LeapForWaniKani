@@ -14,7 +14,9 @@ Leap For Wanikani is available for download on the [Google Play Store]().
 
 <!-- USAGE EXAMPLES -->
 ## Technical
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+The app follows Android's standard MVVM (Model View ViewModel) architecture and implements a **main-safe repository layer with coroutines**. This means that asyncronous functions to request local or remote data use `suspend fun` instead of `LiveData` (or RxJava) in the repository and are only wrapped as obersvable `LiveData` in the `ViewModel`.
+
+Let's look at the data flow for a [Summary](https://docs.api.wanikani.com/20170710/#summary) that backs our lessons and reviews cards as well as push notifications.
 
 ### Fragment (Make Request)
 
@@ -65,7 +67,7 @@ Project Link: [https://github.com/your_username/repo_name](https://github.com/yo
 
 ## Acknowledgements
 * [WaniKani API v2](https://docs.api.wanikani.com/20170710/)
-* [Android Architecture Blueprints v2 MVVM/Coroutines](https://github.com/android/architecture-samples)
-* [Jose Alcérreca, principal author of MVVM/Coroutines sample](https://github.com/JoseAlcerreca)
+* [Android Architecture Blueprints v2 MVVM/Coroutines, Jose Alcérreca, Google](https://github.com/android/architecture-samples)
+* [Coroutines On Android (part III): Real work, Sean McQuillan, Google](https://medium.com/androiddevelopers/coroutines-on-android-part-iii-real-work-2ba8a2ec2f45)
 * [Reducing your networking footprint with OkHttp, Etags and If-Modified-Since](https://android.jlelse.eu/reducing-your-networking-footprint-with-okhttp-etags-and-if-modified-since-b598b8dd81a1)
 * [Best README Template](https://github.com/othneildrew/Best-README-Template)
