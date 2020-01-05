@@ -18,4 +18,17 @@
         android:icon="@drawable/ic_clear_all_black_24dp"
         android:title="@string/nav_drawer_clear_cache"/>
 
+    <item android:title="@string/nav_drawer_about">
+        <menu>
+            <item
+                android:id="@+id/nav_wk_forum"
+                android:icon="@drawable/ic_tag_faces_black_24dp"
+                android:title="@string/nav_drawer_wk_forum"/>
+            <item
+                android:id="@+id/nav_github"
+                android:icon="@mipmap/ic_github_32px"
+                android:title="@string/nav_drawer_github"/>
+        </menu>
+    </item>
+
 </menu>
