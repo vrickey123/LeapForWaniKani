@@ -37,13 +37,13 @@
     <string name="notification_channel_lessons_and_reviews_description">Notifications for your pending lessons and reviews.</string>
 
     <string name="notification_title_lessons">Lessons are ready</string>
-    <string name="notification_text_lessons">You have lessons that are ready to be burned.</string>
+    <string name="notification_text_lessons">You have lessons pending in your queue.</string>
 
     <string name="notification_title_reviews">Reviews are ready</string>
-    <string name="notification_text_reviews">You have reviews that are ready to be burned.</string>
+    <string name="notification_text_reviews">You have reviews pending in your queue.</string>
 
     <string name="notification_title_lessons_and_reviews">Lessons and Reviews are ready</string>
-    <string name="notification_text_lessons_and_reviews">You have lessons and reviews that are ready to be burned.</string>
+    <string name="notification_text_lessons_and_reviews">You have lessons and reviews pending in your queue.</string>
 
     <!-- Nav Drawer -->
     <string name="nav_drawer_login">Login</string>
