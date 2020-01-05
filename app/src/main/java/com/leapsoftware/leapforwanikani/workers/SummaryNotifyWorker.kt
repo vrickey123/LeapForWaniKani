@@ -11,6 +11,10 @@ import kotlinx.coroutines.coroutineScope
 import java.util.*
 import java.util.concurrent.TimeUnit
 
+/**
+ * Makes a periodic network request, managed by the Android OS, every hour to fetch a new summary.
+ * Sends a notification if the request successful and a user has new lessons or reviews.
+ */
 class SummaryNotifyWorker(
     context: Context,
     workerParameters: WorkerParameters
@@ -22,10 +26,14 @@ class SummaryNotifyWorker(
         const val PERIODIC_WORK_REQUEST_UNIQUE_NAME_SUMMARY = "leap_wanikani_periodic_work_summary"
 
         fun enqueueUniquePeriodicWork(context: Context) {
-            val summaryWorkRequest = PeriodicWorkRequestBuilder<SummaryNotifyWorker>(
-                1,
-                TimeUnit.HOURS
-            ).build()
+            val constraints = Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build()
+
+            val summaryWorkRequest =
+                PeriodicWorkRequestBuilder<SummaryNotifyWorker>(1, TimeUnit.HOURS)
+                    .setConstraints(constraints)
+                    .build()
 
             WorkManager.getInstance(context).enqueueUniquePeriodicWork(
                 PERIODIC_WORK_REQUEST_UNIQUE_NAME_SUMMARY,
