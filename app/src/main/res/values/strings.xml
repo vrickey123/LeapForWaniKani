@@ -58,5 +58,6 @@
 
     <!-- Snackbar -->
     <string name="offline_message">Offline</string>
+    <string name="error_message">Response Error. Swipe again to refresh your data.</string>
 
 </resources>
