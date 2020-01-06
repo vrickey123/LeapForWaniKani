@@ -51,7 +51,7 @@
     <string name="nav_drawer_clear_cache">Clear Cache and Resync</string>
     <string name="nav_drawer_level">Level %s</string>
     <string name="nav_drawer_about">About</string>
-    <string name="nav_drawer_wk_forum">WK Forum</string>
+    <string name="nav_drawer_wk_community">WaniKani Community</string>
     <string name="nav_drawer_github">GitHub</string>
 
     <!-- Alert Dialog -->

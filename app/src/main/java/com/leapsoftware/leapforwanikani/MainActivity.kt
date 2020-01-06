@@ -117,7 +117,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_clear_cache -> {
                 mainViewModel.clearCache()
             }
-            R.id.nav_wk_forum -> {
+            R.id.nav_wk_community -> {
                 WebDelegate.openWaniKaniForum(navigationView.context)
             }
             R.id.nav_github -> {
