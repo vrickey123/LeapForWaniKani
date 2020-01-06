@@ -14,7 +14,8 @@ Leap For Wanikani is available for download on the [Google Play Store]().
 
 <!-- USAGE EXAMPLES -->
 ## Technical
-The app follows Android's standard MVVM (Model View ViewModel) architecture and implements a **main-safe repository layer with coroutines**. This means that asyncronous functions to request local or remote data use `suspend fun` instead of `LiveData` (or RxJava) in the repository and are only wrapped as obersvable `LiveData` in the `ViewModel`.
+#### Main-Safe Repository With Coroutines
+The app follows Android's standard **MVVM** ([Model View ViewModel](https://developer.android.com/jetpack/docs/guide#recommended-app-arch)) architecture and implements a **main-safe repository layer with coroutines**. This means that asyncronous functions to request local or remote data use `suspend fun` instead of `LiveData` (or RxJava) in the repository and are only wrapped as observable `LiveData` in the `ViewModel`.
 
 Let's look at the data flow for a [Summary](https://docs.api.wanikani.com/20170710/#summary) that backs our lessons and reviews cards as well as push notifications.
 
