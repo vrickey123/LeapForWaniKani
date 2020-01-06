@@ -16,4 +16,12 @@ object WebDelegate {
     fun openReviews(context: Context) {
         chromeIntent.launchUrl(context, Uri.parse("https://www.wanikani.com/review"))
     }
+
+    fun openWaniKaniForum(context: Context) {
+        chromeIntent.launchUrl(context, Uri.parse("https://community.wanikani.com/t/android-leap-for-wanikani-demo-native-offline-no-web/38276"))
+    }
+
+    fun openGitHub(context: Context) {
+        chromeIntent.launchUrl(context, Uri.parse("https://github.com/vrickey123/LeapForWaniKani"))
+    }
 }

@@ -107,9 +107,7 @@ class WaniKaniRepository(
 
         // Local if remote fails
         val localSummary = getSummaryFromLocal()
-        Log.d(TAG, "return summary local")
         if (localSummary is LeapResult.Success) return localSummary
-        Log.d(TAG, "return summary error")
         return LeapResult.Error(Exception("ApiError fetching summary from remote and local"))
     }
 

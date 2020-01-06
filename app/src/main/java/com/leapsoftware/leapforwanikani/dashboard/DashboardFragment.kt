@@ -7,11 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.card.MaterialCardView
+import com.google.android.material.snackbar.Snackbar
 import com.leapsoftware.leapforwanikani.MainViewModel
 import com.leapsoftware.leapforwanikani.R
 import com.leapsoftware.leapforwanikani.ViewModelFactory
@@ -29,11 +31,6 @@ class DashboardFragment : Fragment() {
 
     private lateinit var dashboardViewModel: DashboardViewModel
     private lateinit var mainViewModel: MainViewModel
-    private lateinit var availableStatus: TextView
-    private lateinit var lessonsCardView: MaterialCardView
-    private lateinit var reviewsCardView: MaterialCardView
-    private lateinit var stageProgressCardView: MaterialCardView
-    private lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,11 +47,11 @@ class DashboardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        availableStatus = view.findViewById<TextView>(R.id.available_status_textview)
-        lessonsCardView = view.findViewById<MaterialCardView>(R.id.lessons_card_included)
-        reviewsCardView = view.findViewById<MaterialCardView>(R.id.reviews_card_included)
-        stageProgressCardView = view.findViewById<MaterialCardView>(R.id.stage_progress_card_included)
-        progressBar = view.findViewById<ProgressBar>(R.id.dashboard_progress_bar)
+        val availableStatus = view.findViewById<TextView>(R.id.available_status_textview)
+        val lessonsCardView = view.findViewById<MaterialCardView>(R.id.lessons_card_included)
+        val reviewsCardView = view.findViewById<MaterialCardView>(R.id.reviews_card_included)
+        val stageProgressCardView = view.findViewById<MaterialCardView>(R.id.stage_progress_card_included)
+        val progressBar = view.findViewById<ProgressBar>(R.id.dashboard_progress_bar)
 
         val dashboardViewAdapter = DashboardViewAdapter(view.context)
         dashboardViewAdapter.bindLessonsTitle(lessonsCardView, getString(R.string.card_lessons_title))
@@ -75,9 +72,15 @@ class DashboardFragment : Fragment() {
             WebDelegate.openReviews(it.context)
         }
 
+        val errorSnackbar = Snackbar.make(
+            swipeRefreshLayout,
+            getString(R.string.error_message),
+            Snackbar.LENGTH_LONG
+        ).setTextColor(ContextCompat.getColor(context!!, R.color.error))
+
         subscribeToUi(
             dashboardViewAdapter, availableStatus, lessonsCardView, reviewsCardView,
-            stageProgressCardView, progressBar
+            stageProgressCardView, progressBar, errorSnackbar
         )
     }
 
@@ -88,7 +91,8 @@ class DashboardFragment : Fragment() {
 
     private fun subscribeToUi(adapter: DashboardViewAdapter, availableStatus: TextView,
                               lessonsCardView: MaterialCardView, reviewsCardView: MaterialCardView,
-                              stageProgressCardView: MaterialCardView, progressBar: ProgressBar) {
+                              stageProgressCardView: MaterialCardView, progressBar: ProgressBar,
+                              errorSnackbar: Snackbar) {
         progressBar.visibility = View.VISIBLE
 
         dashboardViewModel.liveDataSummary.observe(viewLifecycleOwner, Observer { summary ->
@@ -102,10 +106,11 @@ class DashboardFragment : Fragment() {
                     progressBar.visibility = View.VISIBLE
                 }
                 is LeapResult.Error -> {
-                    progressBar.visibility = View.GONE
                     adapter.bindAvailableStatus(availableStatus, null)
                     adapter.bindLessonsCount(lessonsCardView, 0)
                     adapter.bindReviewsCount(reviewsCardView, 0)
+                    progressBar.visibility = View.GONE
+                    errorSnackbar.show()
                 }
                 is LeapResult.Loading -> {
                     progressBar.visibility = View.VISIBLE
@@ -119,11 +124,12 @@ class DashboardFragment : Fragment() {
         dashboardViewModel.liveDataAssignments.observe(viewLifecycleOwner, Observer { assignments ->
             when (assignments) {
                 is LeapResult.Success<List<WKReport.WKResource.Assignment>> -> {
-                    Log.d(TAG, "assignments size = " + assignments.resultData.size)
+                    Log.d(TAG, "Total paged assignments size = " + assignments.resultData.size)
                     progressBar.visibility = View.GONE
                 }
                 is LeapResult.Error -> {
                     progressBar.visibility = View.GONE
+                    errorSnackbar.show()
                 }
                 is LeapResult.Loading -> {
                     progressBar.visibility = View.VISIBLE
