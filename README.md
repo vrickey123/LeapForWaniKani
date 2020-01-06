@@ -139,10 +139,11 @@ dashboardViewModel.liveDataSummary.observe(viewLifecycleOwner, Observer { summar
                     progressBar.visibility = View.VISIBLE
                 }
                 is LeapResult.Error -> {
-                    progressBar.visibility = View.GONE
                     adapter.bindAvailableStatus(availableStatus, null)
                     adapter.bindLessonsCount(lessonsCardView, 0)
                     adapter.bindReviewsCount(reviewsCardView, 0)
+                    progressBar.visibility = View.GONE
+                    errorSnackbar.show()
                 }
                 is LeapResult.Loading -> {
                     progressBar.visibility = View.VISIBLE
