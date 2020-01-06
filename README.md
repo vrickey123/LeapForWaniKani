@@ -157,9 +157,9 @@ dashboardViewModel.liveDataSummary.observe(viewLifecycleOwner, Observer { summar
 
 <!-- ROADMAP -->
 ## Roadmap
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a list of proposed features (and known issues).
+See the [open issues](https://github.com/vrickey123/LeapForWaniKani/issues) for a list of proposed features (and known issues).
 
-See the [CHANGELOG]() for a summary of recent changes.
+See the [CHANGELOG](https://github.com/vrickey123/LeapForWaniKani/blob/chore/update-readme/CHANGELOG.md) for a summary of recent changes.
 
 <!-- CONTRIBUTING -->
 ## Contributing
@@ -181,7 +181,7 @@ Distributed under the GNU General Public License.
 
 In short, this copyleft lisence allows you to use this code in your app as long as you also distribute it as an open-source project under the same GNU GPLv3 license. If you are Tofugu/WaniKani and would like to use it, please contact us.
 
-See [LICENSE](https://github.com/vrickey123/LeapForWaniKani/blob/feature/readme/LICENSE.md) for more information.
+See [LICENSE](https://github.com/vrickey123/LeapForWaniKani/blob/chore/update-readme/LICENSE.md) for more information.
 
 <!-- CONTACT -->
 ## Contact
