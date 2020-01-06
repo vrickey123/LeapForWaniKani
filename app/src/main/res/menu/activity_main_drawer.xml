@@ -26,7 +26,7 @@
                 android:title="@string/nav_drawer_wk_community"/>
             <item
                 android:id="@+id/nav_github"
-                android:icon="@mipmap/ic_github_32px"
+                android:icon="@mipmap/ic_github_120px_plus"
                 android:title="@string/nav_drawer_github"/>
         </menu>
     </item>
