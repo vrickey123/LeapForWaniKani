@@ -9,6 +9,8 @@ Leap For Wanikani is an open-source app developed by the community with three ma
 2. Push notifications that alert you if you have pending lessons or reviews in your queue
 3. An in-app browser that takes you directly to your lessons or reviews then back to the app's Dashboard
 
+Leap for WaniKani also has a [WaniKani Community](https://community.wanikani.com/t/android-leap-for-wanikani-demo-native-offline-no-web/38276) forum post.
+
 ### Google Play
 Leap For Wanikani is available for download on the [Google Play Store]().
 
