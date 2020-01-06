@@ -125,7 +125,7 @@ The `LiveData<Summary` emits changes when the local or remote data source is tri
 ```
 
 ### Fragment (Observe Response)
-The `DashboardFragment` observes the `LiveData<Summary` and reacts when a new summary is emitted. It updates the UI based on a `LeapResult.Success`,`LeapResult.Error`, `LeapResult.Loading`, or `LeapResult.Offline` response so that a user's state is accurately represented.
+The `DashboardFragment` observes the `LiveData<WKReport.Summary>` and reacts when a new summary is emitted. It updates the UI based on a `LeapResult.Success`,`LeapResult.Error`, `LeapResult.Loading`, or `LeapResult.Offline` response so that a user's state is accurately represented.
 
 ```
 dashboardViewModel.liveDataSummary.observe(viewLifecycleOwner, Observer { summary ->
