@@ -16,6 +16,7 @@ class WKApiKeyRequestInterceptor(private val context: Context) : Interceptor {
 
         val headers: Headers = Headers.Builder()
             .add("Authorization", "Bearer $apiKey")
+            .add("Wanikani-Revision", "20170710")
             .build()
 
         val requestWithHeaders: Request = originalRequest.newBuilder()
