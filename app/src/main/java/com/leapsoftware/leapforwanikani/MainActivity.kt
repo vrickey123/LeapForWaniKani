@@ -117,11 +117,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_clear_cache -> {
                 mainViewModel.clearCache()
             }
+            R.id.nav_get_key -> {
+                WebDelegate.openApiKey(navigationView.context)
+            }
             R.id.nav_wk_community -> {
                 WebDelegate.openWaniKaniForum(navigationView.context)
             }
             R.id.nav_github -> {
                 WebDelegate.openGitHub(navigationView.context)
+            }
+            R.id.nav_wanikani_terms -> {
+                WebDelegate.openTerms(navigationView.context)
+            }
+            R.id.nav_lpwk_license -> {
+                WebDelegate.openLicense(navigationView.context)
             }
         }
 
