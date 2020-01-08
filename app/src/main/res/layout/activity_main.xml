@@ -8,10 +8,6 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="end">
 
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -53,8 +49,6 @@
             </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
         </RelativeLayout>
-
-    </ScrollView>
 
     <!-- Must be lowest item to handle open-close swipe gesture -->
     <com.google.android.material.navigation.NavigationView

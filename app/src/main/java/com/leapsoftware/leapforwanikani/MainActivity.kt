@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         navigationView = nav_view
         val navBuildVersion = navigationView.getHeaderView(0).findViewById<TextView>(R.id.nav_header_version)
-        navBuildVersion.text = BuildConfig.VERSION_NAME
+        navBuildVersion.text = String.format("v%s", BuildConfig.VERSION_NAME)
 
         val repository = WaniKaniRepository.getInstance(this)
         val factory = ViewModelFactory(repository)
@@ -93,7 +93,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             getString(R.string.offline_message),
             Snackbar.LENGTH_INDEFINITE
         )
-        
+
         registerNetworkCallback(this, offlineSnackbar)
 
         subscribeToUi(navigationView, offlineSnackbar)
