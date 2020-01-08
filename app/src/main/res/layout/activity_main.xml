@@ -8,47 +8,47 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="end">
 
-        <RelativeLayout
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/coordinator_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <androidx.coordinatorlayout.widget.CoordinatorLayout
-                android:id="@+id/coordinator_layout"
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appbar"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:theme="@style/AppTheme.AppBarOverlay">
 
-                <com.google.android.material.appbar.AppBarLayout
-                    android:id="@+id/appbar"
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:theme="@style/AppTheme.AppBarOverlay">
+                    android:layout_height="?attr/actionBarSize"
+                    app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-                    <androidx.appcompat.widget.Toolbar
-                        android:id="@+id/toolbar"
-                        android:layout_width="match_parent"
-                        android:layout_height="?attr/actionBarSize"
-                        app:popupTheme="@style/AppTheme.PopupOverlay" />
+            </com.google.android.material.appbar.AppBarLayout>
 
-                </com.google.android.material.appbar.AppBarLayout>
+            <TextView
+                android:id="@+id/main_test"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="test" />
 
-                <TextView
-                    android:id="@+id/main_test"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="test"/>
+            <fragment
+                android:id="@+id/nav_host_fragment"
+                android:name="androidx.navigation.fragment.NavHostFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:defaultNavHost="true"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                app:navGraph="@navigation/nav_graph" />
 
-                <fragment
-                    android:id="@+id/nav_host_fragment"
-                    android:name="androidx.navigation.fragment.NavHostFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:defaultNavHost="true"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                    app:navGraph="@navigation/nav_graph" />
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-            </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-        </RelativeLayout>
+    </RelativeLayout>
 
     <!-- Must be lowest item to handle open-close swipe gesture -->
     <com.google.android.material.navigation.NavigationView
