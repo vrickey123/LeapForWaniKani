@@ -23,6 +23,7 @@ import android.widget.LinearLayout
 import android.widget.EditText
 import android.widget.TextView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -33,6 +34,8 @@ import com.leapsoftware.leapforwanikani.data.source.remote.api.WKReport
 import com.leapsoftware.leapforwanikani.utils.LeapNotificationManager
 import com.leapsoftware.leapforwanikani.utils.PreferencesManager
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.nav_header_main.*
+import kotlinx.android.synthetic.main.nav_header_main.view.*
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -65,10 +68,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-        setNavigationDrawer()
+        setActionBarDrawerToggle()
         setNavControllerFragment()
         LeapNotificationManager(this).createNotificationChannels()
         SummaryNotifyWorker.enqueueUniquePeriodicWork(this)
+
+        navigationView = nav_view
+        val navBuildVersion = navigationView.getHeaderView(0).findViewById<TextView>(R.id.nav_header_version)
+        navBuildVersion.text = BuildConfig.VERSION_NAME
 
         val repository = WaniKaniRepository.getInstance(this)
         val factory = ViewModelFactory(repository)
@@ -86,7 +93,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             getString(R.string.offline_message),
             Snackbar.LENGTH_INDEFINITE
         )
-
+        
         registerNetworkCallback(this, offlineSnackbar)
 
         subscribeToUi(navigationView, offlineSnackbar)
@@ -142,8 +149,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         mainViewModel.liveDataUser.observe(this, Observer { user ->
             when (user) {
                 is LeapResult.Success<WKReport.User> -> {
-                    val navTitle = navigationView.findViewById<TextView>(R.id.nav_header_title)
-                    val navSubtitle = navigationView.findViewById<TextView>(R.id.nav_header_subtitle)
+                    val navHeader = navigationView.getHeaderView(0)
+                    val navTitle = navHeader.findViewById<TextView>(R.id.nav_header_title)
+                    val navSubtitle = navHeader.findViewById<TextView>(R.id.nav_header_subtitle)
                     navTitle.text = user.resultData.data.username
                     navSubtitle.text = getString(R.string.nav_drawer_level, user.resultData.data.level.toString())
                 }
@@ -162,7 +170,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         })
     }
 
-    private fun setNavigationDrawer() {
+    private fun setActionBarDrawerToggle() {
         val toggle = ActionBarDrawerToggle(
             this,
             drawer_layout,
@@ -172,9 +180,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         )
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
-
-        navigationView = nav_view
-        navigationView.setNavigationItemSelectedListener(this)
     }
 
     private fun setNavControllerFragment() {
