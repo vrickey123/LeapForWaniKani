@@ -67,15 +67,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        navigationView = nav_view
+
         setSupportActionBar(toolbar)
         setActionBarDrawerToggle()
         setNavControllerFragment()
         LeapNotificationManager(this).createNotificationChannels()
         SummaryNotifyWorker.enqueueUniquePeriodicWork(this)
-
-        navigationView = nav_view
-        val navBuildVersion = navigationView.getHeaderView(0).findViewById<TextView>(R.id.nav_header_version)
-        navBuildVersion.text = String.format("v%s", BuildConfig.VERSION_NAME)
 
         val repository = WaniKaniRepository.getInstance(this)
         val factory = ViewModelFactory(repository)
@@ -110,6 +108,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         } else {
             showLogoutView(navigationView)
         }
+        navigationView.menu.findItem(R.id.nav_version_name).title =
+            String.format("v%s", BuildConfig.VERSION_NAME)
         return true
     }
 

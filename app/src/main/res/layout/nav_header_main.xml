@@ -35,11 +35,4 @@
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body2.Inverse"
         tools:text="@string/nav_header_subtitle" />
 
-    <TextView
-        android:id="@+id/nav_header_version"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption.Inverse"
-        tools:text="v1.0" />
-
 </LinearLayout>

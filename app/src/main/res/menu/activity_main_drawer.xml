@@ -37,6 +37,12 @@
                 android:id="@+id/nav_github"
                 android:icon="@mipmap/ic_github_120px_plus"
                 android:title="@string/nav_drawer_github"/>
+            <!-- Set in MainActivity -->
+            <item
+                android:id="@+id/nav_version_name"
+                android:icon="@drawable/ic_change_history_black_24dp"
+                android:title="version"
+                android:enabled="false"/>
         </menu>
     </item>
 
