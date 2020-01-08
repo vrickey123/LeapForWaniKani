@@ -102,10 +102,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         if (PreferencesManager.getApiKey(navigationView.context).isEmpty()) {
-            Log.d(TAG, "zzz show login")
             showLoginView(navigationView)
         } else {
-            Log.d(TAG, "zzz show logout")
             showLogoutView(navigationView)
         }
         navigationView.menu.findItem(R.id.nav_version_name).title =
