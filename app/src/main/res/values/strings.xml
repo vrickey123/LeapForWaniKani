@@ -53,6 +53,11 @@
     <string name="nav_drawer_about">About</string>
     <string name="nav_drawer_wk_community">WaniKani Community</string>
     <string name="nav_drawer_github">GitHub</string>
+    <string name="nav_drawer_get_api_key">Get an API Key</string>
+    <string name="nav_drawer_api_key">API Key</string>
+    <string name="nav_drawer_wanikani_terms">WaniKani Terms</string>
+    <string name="nav_drawer_terms">Terms</string>
+    <string name="nav_drawer_lpwk_license">LPWK License</string>
 
     <!-- Alert Dialog -->
     <string name="dialog_api_key_title">Enter API Key</string>

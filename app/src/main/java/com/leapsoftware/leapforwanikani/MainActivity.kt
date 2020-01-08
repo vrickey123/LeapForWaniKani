@@ -64,8 +64,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        navigationView = nav_view
+        navigationView.setNavigationItemSelectedListener(this)
+
         setSupportActionBar(toolbar)
-        setNavigationDrawer()
+        setActionBarDrawerToggle()
         setNavControllerFragment()
         LeapNotificationManager(this).createNotificationChannels()
         SummaryNotifyWorker.enqueueUniquePeriodicWork(this)
@@ -103,6 +106,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         } else {
             showLogoutView(navigationView)
         }
+        navigationView.menu.findItem(R.id.nav_version_name).title =
+            String.format("v%s", BuildConfig.VERSION_NAME)
         return true
     }
 
@@ -117,11 +122,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_clear_cache -> {
                 mainViewModel.clearCache()
             }
+            R.id.nav_get_key -> {
+                WebDelegate.openApiKey(navigationView.context)
+            }
             R.id.nav_wk_community -> {
                 WebDelegate.openWaniKaniForum(navigationView.context)
             }
             R.id.nav_github -> {
                 WebDelegate.openGitHub(navigationView.context)
+            }
+            R.id.nav_wanikani_terms -> {
+                WebDelegate.openTerms(navigationView.context)
+            }
+            R.id.nav_lpwk_license -> {
+                WebDelegate.openLicense(navigationView.context)
             }
         }
 
@@ -133,8 +147,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         mainViewModel.liveDataUser.observe(this, Observer { user ->
             when (user) {
                 is LeapResult.Success<WKReport.User> -> {
-                    val navTitle = navigationView.findViewById<TextView>(R.id.nav_header_title)
-                    val navSubtitle = navigationView.findViewById<TextView>(R.id.nav_header_subtitle)
+                    val navHeader = navigationView.getHeaderView(0)
+                    val navTitle = navHeader.findViewById<TextView>(R.id.nav_header_title)
+                    val navSubtitle = navHeader.findViewById<TextView>(R.id.nav_header_subtitle)
                     navTitle.text = user.resultData.data.username
                     navSubtitle.text = getString(R.string.nav_drawer_level, user.resultData.data.level.toString())
                 }
@@ -153,7 +168,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         })
     }
 
-    private fun setNavigationDrawer() {
+    private fun setActionBarDrawerToggle() {
         val toggle = ActionBarDrawerToggle(
             this,
             drawer_layout,
@@ -163,9 +178,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         )
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
-
-        navigationView = nav_view
-        navigationView.setNavigationItemSelectedListener(this)
     }
 
     private fun setNavControllerFragment() {
