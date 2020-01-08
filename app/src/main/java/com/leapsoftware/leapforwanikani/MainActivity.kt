@@ -68,6 +68,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         navigationView = nav_view
+        navigationView.setNavigationItemSelectedListener(this)
 
         setSupportActionBar(toolbar)
         setActionBarDrawerToggle()
