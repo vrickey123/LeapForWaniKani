@@ -57,6 +57,7 @@
     <string name="nav_drawer_api_key">API Key</string>
     <string name="nav_drawer_wanikani_terms">WaniKani Terms</string>
     <string name="nav_drawer_terms">Terms</string>
+    <string name="nav_drawer_lpwk_license">LPWK License</string>
 
     <!-- Alert Dialog -->
     <string name="dialog_api_key_title">Enter API Key</string>
