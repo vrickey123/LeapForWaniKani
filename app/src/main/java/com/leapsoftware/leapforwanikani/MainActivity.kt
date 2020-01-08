@@ -147,14 +147,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         mainViewModel.liveDataUser.observe(this, Observer { user ->
             when (user) {
                 is LeapResult.Success<WKReport.User> -> {
-                    val navHeader = navigationView.getHeaderView(0)
-                    val navTitle = navHeader.findViewById<TextView>(R.id.nav_header_title)
-                    val navSubtitle = navHeader.findViewById<TextView>(R.id.nav_header_subtitle)
-                    navTitle.text = user.resultData.data.username
-                    navSubtitle.text = getString(R.string.nav_drawer_level, user.resultData.data.level.toString())
+                    Log.d(TAG, "User updated")
+                    bindNavHeader(
+                        navigationView,
+                        user.resultData.data.username,
+                        getString(R.string.nav_drawer_level, user.resultData.data.level.toString())
+                    )
                 }
                 is LeapResult.Error -> {
                     Log.e(TAG, "Error getting user")
+                    // An error getting the user object from the backend doesn't necessarily
+                    // mean that we want to delete the user's api key or log them out
                 }
                 is LeapResult.Offline -> {
                     Log.e(TAG, "No connection getting user")
@@ -166,6 +169,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         mainViewModel.onClearCache.observe(this, Observer {
             mainViewModel.refreshData()
         })
+
+        mainViewModel.onLogout.observe(this, Observer {
+            bindNavHeader(navigationView, "", "")
+        })
+    }
+
+    private fun bindNavHeader(navigationView: NavigationView, title: String, subtitle: String) {
+        val navHeader = navigationView.getHeaderView(0)
+        navHeader.findViewById<TextView>(R.id.nav_header_title).text = title
+        navHeader.findViewById<TextView>(R.id.nav_header_subtitle).text = subtitle
     }
 
     private fun setActionBarDrawerToggle() {
@@ -216,6 +229,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         invalidateOptionsMenu()
         mainViewModel.clearCache()
         mainViewModel.refreshData()
+        mainViewModel.onLogout.postValue(Unit)
     }
 
     private fun showLoginView(navigationView: NavigationView) {

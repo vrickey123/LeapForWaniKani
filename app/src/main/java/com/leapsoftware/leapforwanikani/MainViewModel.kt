@@ -21,6 +21,7 @@ class MainViewModel(private val waniKaniRepository: WaniKaniRepository) : ViewMo
 
     val onClearCache = MutableLiveData<Unit>()
     val onLogin = MutableLiveData<Unit>()
+    val onLogout = MutableLiveData<Unit>()
 
     val liveDataUser: LiveData<LeapResult<WKReport.User>> =
         liveData {
