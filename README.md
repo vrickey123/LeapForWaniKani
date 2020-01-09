@@ -51,27 +51,32 @@ The Repository layer is reponsible for returning local or remote data. Note that
         }
     }
     
-      private suspend fun fetchSummaryRemoteOrLocal(): LeapResult<WKReport.Summary> {
-        val remoteSummary = wkRemoteDataSource.getSummaryAsync()
+    private suspend fun fetchSummaryRemoteOrLocal(updatedAfter: Long): LeapResult<WKReport.Summary> {
+        val remoteSummary = wkRemoteDataSource.getSummaryAsync(updatedAfter)
         when (remoteSummary) {
-            is WKApiResponse.ApiError -> Log.w(TAG, "Remote summary source fetch failed")
+            is WKApiResponse.ApiError -> {
+                Log.w(TAG, "Remote summary source fetch failed")
+                // Try Local if remote fails
+                val localSummary = getSummaryFromLocal()
+                if (localSummary is LeapResult.Success) return localSummary
+                val exception = createException(remoteSummary.code, "ApiError fetching summary from remote and local")
+                return LeapResult.Error(exception)
+            }
             is WKApiResponse.ApiNotModified -> {
+                Log.d(TAG, "Remote summary not modified. Returning local.")
                 return getSummaryFromLocal()
             }
             is WKApiResponse.ApiSuccess -> {
+                Log.d(TAG, "Remote summary success. Returning latest remote.")
                 refreshLocalSummary(remoteSummary.responseData)
                 return LeapResult.Success(remoteSummary.responseData)
             }
             is WKApiResponse.NoConnection -> {
+                Log.e(TAG, "No connection. Could not fetch fresh summary.")
                 return LeapResult.Offline
             }
             else -> throw IllegalStateException()
         }
-
-        // Local if remote fails
-        val localSummary = getSummaryFromLocal()
-        if (localSummary is LeapResult.Success) return localSummary
-        return LeapResult.Error(Exception("ApiError fetching summary from remote and local"))
     }
 
     private suspend fun getSummaryFromLocal(): LeapResult<WKReport.Summary> {
