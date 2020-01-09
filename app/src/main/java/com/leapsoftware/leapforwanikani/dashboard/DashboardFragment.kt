@@ -31,10 +31,9 @@ class DashboardFragment : Fragment() {
         fun newInstance() = DashboardFragment()
 
         fun getErrorMessage(context: Context, exception: Exception): String {
-            return if (exception is AuthenticationException) {
-                context.getString(R.string.login_error_message)
-            } else {
-                context.getString(R.string.error_message)
+            return when(exception) {
+                is AuthenticationException -> context.getString(R.string.login_error_message)
+                else -> context.getString(R.string.error_message)
             }
         }
     }
