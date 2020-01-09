@@ -66,6 +66,7 @@
 
     <!-- Snackbar -->
     <string name="offline_message">Offline</string>
-    <string name="error_message">Response Error. Swipe again to refresh your data.</string>
+    <string name="error_message">Response Error. Swipe to refresh or check login status.</string>
+    <string name="login_error_message">Unauthorized. Check login status.</string>
 
 </resources>

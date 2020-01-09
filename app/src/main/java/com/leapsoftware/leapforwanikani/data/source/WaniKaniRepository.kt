@@ -1,5 +1,6 @@
 package com.leapsoftware.leapforwanikani.data.source
 
+import android.app.AuthenticationRequiredException
 import android.content.Context
 import android.util.Log
 import com.leapsoftware.leapforwanikani.networking.WKApiResponse
@@ -11,6 +12,7 @@ import com.leapsoftware.leapforwanikani.data.source.local.WaniKaniDatabase
 import com.leapsoftware.leapforwanikani.data.source.remote.api.WKCollection
 import com.leapsoftware.leapforwanikani.data.source.remote.api.WKReport
 import com.leapsoftware.leapforwanikani.data.source.remote.api.types.WKSrsStageType
+import com.leapsoftware.leapforwanikani.data.source.remote.exceptions.AuthenticationException
 import com.leapsoftware.leapforwanikani.data.source.remote.networking.WKRemoteDataSource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -40,6 +42,13 @@ class WaniKaniRepository(
                 instance ?: WaniKaniRepository(waniKaniService, localDataSource)
                     .also { instance = it }
             }
+
+        fun createException(code: Int, defaultMessage: String): Exception {
+            return when (code) {
+                WaniKaniService.code_unauthorized -> AuthenticationException()
+                else -> Exception(defaultMessage)
+            }
+        }
     }
 
     override suspend fun getSummary(updatedAfter: Long): LeapResult<WKReport.Summary> {
@@ -88,7 +97,14 @@ class WaniKaniRepository(
     private suspend fun fetchSummaryRemoteOrLocal(updatedAfter: Long): LeapResult<WKReport.Summary> {
         val remoteSummary = wkRemoteDataSource.getSummaryAsync(updatedAfter)
         when (remoteSummary) {
-            is WKApiResponse.ApiError -> Log.w(TAG, "Remote summary source fetch failed")
+            is WKApiResponse.ApiError -> {
+                Log.w(TAG, "Remote summary source fetch failed")
+                // Local if remote fails
+                val localSummary = getSummaryFromLocal()
+                if (localSummary is LeapResult.Success) return localSummary
+                val exception = createException(remoteSummary.code, "ApiError fetching summary from remote and local")
+                return LeapResult.Error(exception)
+            }
             is WKApiResponse.ApiNotModified -> {
                 Log.d(TAG, "Remote summary not modified. Returning local.")
                 return getSummaryFromLocal()
@@ -104,11 +120,6 @@ class WaniKaniRepository(
             }
             else -> throw IllegalStateException()
         }
-
-        // Local if remote fails
-        val localSummary = getSummaryFromLocal()
-        if (localSummary is LeapResult.Success) return localSummary
-        return LeapResult.Error(Exception("ApiError fetching summary from remote and local"))
     }
 
     private suspend fun getSummaryFromLocal(): LeapResult<WKReport.Summary> {
@@ -120,7 +131,14 @@ class WaniKaniRepository(
             wkRemoteDataSource.getAssignmentsAsync(pageAfterId)
 
         when (remoteAssignments) {
-            is WKApiResponse.ApiError -> Log.w(TAG, "Remote assignments source fetch failed")
+            is WKApiResponse.ApiError -> {
+                Log.w(TAG, "Remote assignments source fetch failed")
+                // Local if remote fails
+                val localAssignments = getAssignmentsFromLocal()
+                if (localAssignments is LeapResult.Success) return localAssignments
+                val exception = createException(remoteAssignments.code, "ApiError fetching summary from remote and local")
+                return LeapResult.Error(exception)
+            }
             is WKApiResponse.ApiNotModified -> {
                 Log.d(TAG, "Remote assignments not modified. Returning local.")
                 return getAssignmentsFromLocal()
@@ -136,11 +154,6 @@ class WaniKaniRepository(
             }
             else -> throw IllegalStateException()
         }
-
-        // Local if remote fails
-        val localAssignments = getAssignmentsFromLocal()
-        if (localAssignments is LeapResult.Success) return localAssignments
-        return LeapResult.Error(Exception("ApiError fetching assignments from remote and local"))
     }
 
     private suspend fun getAssignmentsFromLocal(): LeapResult<List<WKReport.WKResource.Assignment>> {
@@ -154,7 +167,14 @@ class WaniKaniRepository(
     private suspend fun fetchUserRemoteOrLocal(): LeapResult<WKReport.User> {
         val remoteUser = wkRemoteDataSource.getUserAsync()
         when (remoteUser) {
-            is WKApiResponse.ApiError -> Log.w(TAG, "Remote user responseData source fetch failed")
+            is WKApiResponse.ApiError -> {
+                Log.w(TAG, "Remote user responseData source fetch failed")
+                // Local if remote fails
+                val localUser = getUserFromLocal()
+                if (localUser is LeapResult.Success) return localUser
+                val exception = createException(remoteUser.code, "ApiError fetching user from remote and local")
+                return LeapResult.Error(exception)
+            }
             is WKApiResponse.ApiNotModified -> {
                 Log.d(TAG, "Remote user not modified. Returning local.")
                 return getUserFromLocal()
@@ -170,11 +190,6 @@ class WaniKaniRepository(
             }
             else -> throw IllegalStateException()
         }
-
-        // Local if remote fails
-        val localUser = getUserFromLocal()
-        if (localUser is LeapResult.Success) return localUser
-        return LeapResult.Error(Exception("ApiError fetching user from remote and local"))
     }
 
     private suspend fun getUserFromLocal(): LeapResult<WKReport.User> {

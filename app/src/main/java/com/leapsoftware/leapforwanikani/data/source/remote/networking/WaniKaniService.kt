@@ -43,6 +43,15 @@ class WaniKaniService private constructor(
     private val waniKaniApi: WaniKaniApi = retrofit.create(WaniKaniApi::class.java)
 
     companion object {
+        const val code_success = 200
+        const val code_unauthorized = 401
+        const val code_forbidden = 403
+        const val code_not_found = 404
+        const val code_unprocessable_entity = 422
+        const val code_too_many_requests = 429
+        const val code_internal_server_error = 500
+        const val code_service_unavailable = 503
+
         // For Singleton instantiation
         @Volatile
         private var instance: WaniKaniService? = null

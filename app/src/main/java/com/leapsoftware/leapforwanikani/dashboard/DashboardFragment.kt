@@ -1,5 +1,6 @@
 package com.leapsoftware.leapforwanikani.dashboard
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,6 +21,7 @@ import com.leapsoftware.leapforwanikani.ViewModelFactory
 import com.leapsoftware.leapforwanikani.data.LeapResult
 import com.leapsoftware.leapforwanikani.data.source.WaniKaniRepository
 import com.leapsoftware.leapforwanikani.data.source.remote.api.WKReport
+import com.leapsoftware.leapforwanikani.data.source.remote.exceptions.AuthenticationException
 
 class DashboardFragment : Fragment() {
 
@@ -27,6 +29,14 @@ class DashboardFragment : Fragment() {
 
     companion object {
         fun newInstance() = DashboardFragment()
+
+        fun getErrorMessage(context: Context, exception: Exception): String {
+            return if (exception is AuthenticationException) {
+                context.getString(R.string.login_error_message)
+            } else {
+                context.getString(R.string.error_message)
+            }
+        }
     }
 
     private lateinit var dashboardViewModel: DashboardViewModel
@@ -110,6 +120,7 @@ class DashboardFragment : Fragment() {
                     adapter.bindLessonsCount(lessonsCardView, 0)
                     adapter.bindReviewsCount(reviewsCardView, 0)
                     progressBar.visibility = View.GONE
+                    errorSnackbar.setText(getErrorMessage(context!!, summary.exception))
                     errorSnackbar.show()
                 }
                 is LeapResult.Loading -> {
@@ -129,6 +140,7 @@ class DashboardFragment : Fragment() {
                 }
                 is LeapResult.Error -> {
                     progressBar.visibility = View.GONE
+                    errorSnackbar.setText(getErrorMessage(context!!, assignments.exception))
                     errorSnackbar.show()
                 }
                 is LeapResult.Loading -> {
