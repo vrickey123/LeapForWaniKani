@@ -193,9 +193,7 @@ See [LICENSE](https://github.com/vrickey123/LeapForWaniKani/blob/chore/update-re
 
 <!-- CONTACT -->
 ## Contact
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
-
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
+team@leapsoftware.io
 
 ## Acknowledgements
 * [WaniKani API v2](https://docs.api.wanikani.com/20170710/)
