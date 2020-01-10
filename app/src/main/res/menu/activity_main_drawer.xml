@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:showIn="navigation_view">
+
+    <item
+        android:id="@+id/nav_login"
+        android:icon="@drawable/ic_person_black_24dp"
+        android:title="@string/nav_drawer_login" />
+
+    <item
+        android:id="@+id/nav_logout"
+        android:icon="@drawable/ic_person_outline_black_24dp"
+        android:title="@string/nav_drawer_logout"/>
+
+    <item
+        android:id="@+id/nav_clear_cache"
+        android:icon="@drawable/ic_clear_all_black_24dp"
+        android:title="@string/nav_drawer_clear_cache"/>
+
+    <item android:title="@string/nav_drawer_api_key">
+        <menu>
+            <item
+                android:id="@+id/nav_get_key"
+                android:icon="@drawable/ic_vpn_key_black_24dp"
+                android:title="@string/nav_drawer_get_api_key"/>
+        </menu>
+    </item>
+
+    <item android:title="@string/nav_drawer_about">
+        <menu>
+            <item
+                android:id="@+id/nav_wk_community"
+                android:icon="@drawable/ic_public_black_24dp"
+                android:title="@string/nav_drawer_wk_community"/>
+            <item
+                android:id="@+id/nav_github"
+                android:icon="@mipmap/ic_github_120px_plus"
+                android:title="@string/nav_drawer_github"/>
+            <!-- Set in MainActivity -->
+            <item
+                android:id="@+id/nav_version_name"
+                android:icon="@drawable/ic_change_history_black_24dp"
+                android:title="version"
+                android:enabled="false"/>
+        </menu>
+    </item>
+
+    <item android:title="@string/nav_drawer_terms">
+        <menu>
+            <item
+                android:id="@+id/nav_wanikani_terms"
+                android:icon="@drawable/ic_public_black_24dp"
+                android:title="@string/nav_drawer_wanikani_terms"/>
+            <item
+                android:id="@+id/nav_lpwk_license"
+                android:icon="@mipmap/ic_github_120px_plus"
+                android:title="@string/nav_drawer_lpwk_license" />
+        </menu>
+    </item>
+
+</menu>

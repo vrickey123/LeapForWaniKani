@@ -1,0 +1,72 @@
+<resources>
+    <string name="app_name">Leap For WaniKani</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Dashboard Stage Progress Card -->
+    <string name="apprentice_title">Apprentice</string>
+    <string name="guru_title">Guru</string>
+    <string name="master_title">Master</string>
+    <string name="enlightened">Enlightened</string>
+    <string name="burned_title">Burned</string>
+
+    <!-- Dashboard Status -->
+    <string name="title_dashboard">Dashboard</string>
+    <string name="review_status">Review Status</string>
+    <string name="error_available_status">Check back soon</string>
+
+    <!-- Dashboard Lesson Review Cards -->
+    <string name="card_lessons_title">Lessons</string>
+    <string name="card_reviews_title">Reviews</string>
+    <string name="date_format_review_status">MMMM dd \'at\' HH:mm</string>
+    <string name="review_status_format_minutes">Available in %d minutes</string>
+    <string name="review_status_format_hours">Available in %d hours</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_lessons_name">Lessons</string>
+    <string name="notification_channel_lessons_description">Notifications for your pending lessons.</string>
+
+    <string name="notification_channel_reviews_name">Reviews</string>
+    <string name="notification_channel_reviews_description">Notifications for your pending reviews.</string>
+
+    <string name="notification_channel_lessons_and_reviews_name">Lessons and Reviews</string>
+    <string name="notification_channel_lessons_and_reviews_description">Notifications for your pending lessons and reviews.</string>
+
+    <string name="notification_title_lessons">Lessons are ready</string>
+    <string name="notification_text_lessons">You have lessons pending in your queue.</string>
+
+    <string name="notification_title_reviews">Reviews are ready</string>
+    <string name="notification_text_reviews">You have reviews pending in your queue.</string>
+
+    <string name="notification_title_lessons_and_reviews">Lessons and Reviews are ready</string>
+    <string name="notification_text_lessons_and_reviews">You have lessons and reviews pending in your queue.</string>
+
+    <!-- Nav Drawer -->
+    <string name="nav_drawer_login">Login</string>
+    <string name="nav_drawer_logout">Logout</string>
+    <string name="nav_drawer_clear_cache">Clear Cache and Resync</string>
+    <string name="nav_drawer_level">Level %s</string>
+    <string name="nav_drawer_about">About</string>
+    <string name="nav_drawer_wk_community">WaniKani Community</string>
+    <string name="nav_drawer_github">GitHub</string>
+    <string name="nav_drawer_get_api_key">Get API V2 Key</string>
+    <string name="nav_drawer_api_key">API Key</string>
+    <string name="nav_drawer_wanikani_terms">WaniKani Terms</string>
+    <string name="nav_drawer_terms">Terms</string>
+    <string name="nav_drawer_lpwk_license">LPWK License</string>
+
+    <!-- Alert Dialog -->
+    <string name="dialog_api_key_title">Enter API Key</string>
+    <string name="dialog_api_key_message">You can get an API key from your profile settings on WaniKani.com</string>
+    <string name="dialog_api_key_positive_button">OK</string>
+
+    <!-- Snackbar -->
+    <string name="offline_message">Offline</string>
+    <string name="error_message">Response Error. Swipe to refresh or check login status.</string>
+    <string name="login_error_message">Unauthorized. Check login status.</string>
+
+</resources>

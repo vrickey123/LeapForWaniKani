@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#eeeeee</color>
+    <color name="colorPrimaryDark">#bcbcbc</color>
+    <color name="colorPrimaryLight">#ffffff</color>
+    <color name="colorSecondary">#90a4ae</color>
+    <color name="colorSecondaryDark">#62757f</color>
+    <color name="colorSecondaryLight">#C1D5E0</color>
+    <color name="windowBackground">#FAFAFA</color>
+
+    <color name="wkBlue">#38AAFB</color>
+    <color name="wkPink">#EC519F</color>
+    <color name="wkPurple">#AE58FD</color>
+    <color name="wkDarkBlue">#3859dc</color>
+    <color name="wkGrey">#4b4b4b</color>
+    <color name="wkLightBlack">#292e3c</color>
+    <color name="text_shadow_color">#18000000</color>
+
+    <color name="error">#f44336</color> <!--material red 500-->
+</resources>
