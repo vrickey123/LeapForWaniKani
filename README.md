@@ -14,7 +14,7 @@ Leap For Wanikani is an open-source app developed by the community with three ma
 Leap for WaniKani also has a [WaniKani Community](https://community.wanikani.com/t/android-leap-for-wanikani-demo-native-offline-no-web/38276) forum post.
 
 ### Google Play
-Leap For Wanikani is available for download on the [Google Play Store]().
+Leap For Wanikani is available for download on the [Google Play Store](https://play.google.com/store/apps/details?id=com.leapsoftware.leapforwanikani&hl=en_US).
 
 <!-- USAGE EXAMPLES -->
 ## Technical
@@ -126,7 +126,7 @@ The WaniKani API supports [conditional requests](https://docs.api.wanikani.com/2
 If their data has not changed, a `304 Not Modified` response is returned to the app which significantly reduces mobile network usage by eliminating unecessary downloads.
 
 ### ViewModel (Observe Response)
-The `LiveData<Summary` emits changes when the local or remote data source is triggered.
+The `LiveData<Summary>` emits changes when the local or remote data source is triggered.
 ```
     val liveDataSummary: LiveData<LeapResult<WKReport.Summary>> =
         liveData {
