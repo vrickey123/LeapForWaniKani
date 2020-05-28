@@ -17,11 +17,11 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.leapsoftware.leapforwanikani.dashboard.WebDelegate
-import com.leapsoftware.leapforwanikani.data.source.remote.api.WKData
 import com.leapsoftware.leapforwanikani.workers.SummaryNotifyWorker
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.leapsoftware.leapforwanikani.data.LeapResult
 import com.leapsoftware.leapforwanikani.data.source.WaniKaniRepository
@@ -29,7 +29,6 @@ import com.leapsoftware.leapforwanikani.data.source.remote.api.WKReport
 import com.leapsoftware.leapforwanikani.utils.LeapNotificationManager
 import com.leapsoftware.leapforwanikani.utils.PreferencesManager
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -94,6 +93,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.nav_clear_cache -> {
                 mainViewModel.clearCache()
+            }
+            R.id.nav_notifications -> {
+                mainNavDrawerAdapter.showNotificationPrefs(this)
             }
             R.id.nav_get_key -> {
                 WebDelegate.openApiKey(this)

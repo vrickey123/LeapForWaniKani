@@ -18,6 +18,15 @@
         android:icon="@drawable/ic_clear_all_black_24dp"
         android:title="@string/nav_drawer_clear_cache"/>
 
+    <item android:title="@string/nav_drawer_notifications">
+        <menu>
+            <item
+                android:id="@+id/nav_notifications"
+                android:icon="@drawable/ic_notifications_black_24dp"
+                android:title="@string/nav_drawer_notifications"/>
+        </menu>
+    </item>
+
     <item android:title="@string/nav_drawer_api_key">
         <menu>
             <item

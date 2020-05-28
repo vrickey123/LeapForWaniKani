@@ -1,6 +1,8 @@
 package com.leapsoftware.leapforwanikani
 
 import android.app.Activity
+import android.content.Context
+import android.util.Log
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -12,6 +14,8 @@ class MainNavDrawerAdapter(
     private val navigationView: NavigationView,
     private val mainViewModel: MainViewModel
 ) {
+
+    private val TAG by lazy { MainNavDrawerAdapter::class.java.simpleName }
 
     fun setOnItemSelectedListener(onNavigationItemSelectedListener: NavigationView.OnNavigationItemSelectedListener) {
         navigationView.setNavigationItemSelectedListener(onNavigationItemSelectedListener)
@@ -56,6 +60,33 @@ class MainNavDrawerAdapter(
         mainViewModel.clearCache()
         mainViewModel.refreshData()
         mainViewModel.onLogout.postValue(Unit)
+    }
+
+    fun showNotificationPrefs(context: Context) {
+        val notifiPrefOptions = Array<String>(25) {
+            if (it == 0) {
+                "Disabled"
+            } else {
+                String.format("Every %d hours", it)
+            }
+        }
+        var checkedItem = PreferencesManager.getNotificationPref(context)
+
+        MaterialAlertDialogBuilder(context)
+            .setTitle("Notification Preferences")
+            .setNeutralButton(context.resources.getString(android.R.string.cancel)) { dialog, which ->
+                dialog.dismiss()
+            }
+            .setPositiveButton(context.resources.getString(android.R.string.ok)) { dialog, which ->
+                // Respond to positive button press
+                PreferencesManager.saveNotificationPref(context, checkedItem)
+            }
+            // Single-choice items (initialized with checked item)
+            .setSingleChoiceItems(notifiPrefOptions, checkedItem) { dialog, which ->
+                // Respond to item chosen
+                checkedItem = which
+            }
+            .show()
     }
 
     fun showLoginView(activity: Activity) {

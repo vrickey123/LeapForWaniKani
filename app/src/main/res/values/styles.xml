@@ -74,10 +74,15 @@
     <style name="AlertDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
         <item name="buttonBarPositiveButtonStyle">@style/Alert.Button.Positive</item>
         <!--<item name="buttonBarNegativeButtonStyle">@style/Alert.Button.Neutral</item>-->
-        <!--<item name="buttonBarNeutralButtonStyle">@style/Alert.Button.Neutral</item>-->
+        <item name="buttonBarNeutralButtonStyle">@style/Alert.Button.Neutral</item>
     </style>
 
     <style name="Alert.Button.Positive" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="rippleColor">?android:colorAccent</item>
+        <item name="android:textColor">?android:textColorPrimary</item>
+    </style>
+
+    <style name="Alert.Button.Neutral" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="rippleColor">?android:colorAccent</item>
         <item name="android:textColor">?android:textColorPrimary</item>
     </style>
