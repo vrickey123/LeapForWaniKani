@@ -56,7 +56,7 @@ class SummaryNotifyWorker(
             }
             is WKApiResponse.ApiSuccess -> {
                 Log.d(TAG, "SummaryWorker success.")
-                val requestCode = MainActivity.getActivityRequestCode(summary.responseData.data)
+                val requestCode = LeapNotificationManager.getRequestCode(summary.responseData.data)
                 LeapNotificationManager.sendNotification(applicationContext, requestCode)
                 repository.refreshLocalSummary(summary.responseData)
                 Result.success()

@@ -29,6 +29,7 @@ import com.leapsoftware.leapforwanikani.data.source.remote.api.WKReport
 import com.leapsoftware.leapforwanikani.utils.LeapNotificationManager
 import com.leapsoftware.leapforwanikani.utils.PreferencesManager
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -37,25 +38,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private lateinit var mainViewModel: MainViewModel
     private lateinit var mainNavDrawerAdapter: MainNavDrawerAdapter
-
-    companion object {
-        const val EXTRAS_REQUEST_CODE = "leap_notification_action_request_code"
-        const val REQUEST_CODE_LESSONS = 1
-        const val REQUEST_CODE_REVIEWS = 2
-        const val REQUEST_CODE_LESSONS_AND_REVIEWS = 3
-
-        fun getActivityRequestCode(summaryData: WKData.SummaryData): Int {
-            return if (summaryData.lessons.isNotEmpty() && summaryData.reviews.isNotEmpty()) {
-                REQUEST_CODE_LESSONS_AND_REVIEWS
-            } else if (summaryData.lessons.isNotEmpty()) {
-                REQUEST_CODE_LESSONS
-            } else if (summaryData.reviews.isNotEmpty()) {
-                REQUEST_CODE_REVIEWS
-            } else {
-                -1
-            }
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,10 +56,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         mainNavDrawerAdapter.setOnItemSelectedListener(this)
 
         // Respond to notification open actions
-        val requestCode: Int = intent.getIntExtra(EXTRAS_REQUEST_CODE, -1)
+        val requestCode: Int = intent.getIntExtra(LeapNotificationManager.EXTRAS_REQUEST_CODE, -1)
         when (requestCode) {
-            REQUEST_CODE_LESSONS -> WebDelegate.openLessons(this)
-            REQUEST_CODE_REVIEWS -> WebDelegate.openReviews(this)
+            LeapNotificationManager.REQUEST_CODE_LESSONS -> WebDelegate.openLessons(this)
+            LeapNotificationManager.REQUEST_CODE_REVIEWS -> WebDelegate.openReviews(this)
         }
 
         val offlineSnackbar = Snackbar.make(
