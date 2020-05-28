@@ -21,6 +21,7 @@ import com.leapsoftware.leapforwanikani.workers.SummaryNotifyWorker
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.work.ExistingPeriodicWorkPolicy
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.leapsoftware.leapforwanikani.data.LeapResult
@@ -45,7 +46,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setActionBarDrawerToggle()
         setNavControllerFragment()
         LeapNotificationManager(this).createNotificationChannels()
-        SummaryNotifyWorker.enqueueUniquePeriodicWork(this)
+        SummaryNotifyWorker.enqueueUniquePeriodicWork(this, ExistingPeriodicWorkPolicy.KEEP)
 
         val repository = WaniKaniRepository.getInstance(this)
         val factory = ViewModelFactory(repository)

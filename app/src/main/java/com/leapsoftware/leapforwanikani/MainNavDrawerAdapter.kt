@@ -6,9 +6,11 @@ import android.util.Log
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.work.ExistingPeriodicWorkPolicy
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.navigation.NavigationView
 import com.leapsoftware.leapforwanikani.utils.PreferencesManager
+import com.leapsoftware.leapforwanikani.workers.SummaryNotifyWorker
 
 class MainNavDrawerAdapter(
     private val navigationView: NavigationView,
@@ -80,6 +82,7 @@ class MainNavDrawerAdapter(
             .setPositiveButton(context.resources.getString(android.R.string.ok)) { dialog, which ->
                 // Respond to positive button press
                 PreferencesManager.saveNotificationPref(context, checkedItem)
+                SummaryNotifyWorker.enqueueUniquePeriodicWork(context, ExistingPeriodicWorkPolicy.REPLACE)
             }
             // Single-choice items (initialized with checked item)
             .setSingleChoiceItems(notifiPrefOptions, checkedItem) { dialog, which ->
