@@ -75,7 +75,7 @@ class MainNavDrawerAdapter(
         var checkedItem = PreferencesManager.getNotificationPref(context)
 
         MaterialAlertDialogBuilder(context)
-            .setTitle("Notification Preferences")
+            .setTitle(context.resources.getString(R.string.dialog_notification_prefs))
             .setNeutralButton(context.resources.getString(android.R.string.cancel)) { dialog, which ->
                 dialog.dismiss()
             }

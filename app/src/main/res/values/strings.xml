@@ -64,6 +64,7 @@
     <string name="dialog_api_key_title">Enter API Key</string>
     <string name="dialog_api_key_message">You can get an API key from your profile settings on WaniKani.com</string>
     <string name="dialog_api_key_positive_button">OK</string>
+    <string name="dialog_notification_prefs">Notification Preferences</string>
 
     <!-- Snackbar -->
     <string name="offline_message">Offline</string>
