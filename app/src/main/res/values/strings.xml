@@ -70,5 +70,6 @@
     <string name="offline_message">Offline</string>
     <string name="error_message">Response Error. Swipe to refresh or check login status.</string>
     <string name="login_error_message">Unauthorized. Check login status.</string>
+    <string name="new_features_110">This release includes bug fixes for notifications and Notification Preferences in the Nav Drawer.</string>
 
 </resources>

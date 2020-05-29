@@ -22,7 +22,6 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.work.ExistingPeriodicWorkPolicy
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.leapsoftware.leapforwanikani.data.LeapResult
 import com.leapsoftware.leapforwanikani.data.source.WaniKaniRepository
@@ -47,6 +46,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setNavControllerFragment()
         LeapNotificationManager(this).createNotificationChannels()
         SummaryNotifyWorker.enqueueUniquePeriodicWork(this, ExistingPeriodicWorkPolicy.KEEP)
+        showNewFeatureSnackbar(BuildConfig.VERSION_CODE)
 
         val repository = WaniKaniRepository.getInstance(this)
         val factory = ViewModelFactory(repository)
@@ -195,6 +195,26 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             })
         } else {
             // no-op. Users should swipe to refresh
+        }
+    }
+
+    private fun showNewFeatureSnackbar(versionCode: Int) {
+        val message = when (versionCode) {
+            110 -> {
+                getString(R.string.new_features_110)
+            }
+            else -> ""
+        }
+        if (!PreferencesManager.getHasUserOnboarded(this, versionCode)) {
+            val newFeatureSnackbar = Snackbar.make(
+                findViewById<CoordinatorLayout>(R.id.coordinator_layout),
+                message,
+                Snackbar.LENGTH_INDEFINITE
+            )
+            newFeatureSnackbar.setAction(resources.getString(android.R.string.ok)) {
+                PreferencesManager.setHasUserOnboarded(this, true, versionCode)
+            }
+            newFeatureSnackbar.show()
         }
     }
 
