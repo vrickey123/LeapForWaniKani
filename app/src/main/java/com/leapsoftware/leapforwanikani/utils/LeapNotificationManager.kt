@@ -11,12 +11,19 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.leapsoftware.leapforwanikani.MainActivity
 import com.leapsoftware.leapforwanikani.R
+import com.leapsoftware.leapforwanikani.data.source.remote.api.WKData
+import java.util.*
 
 class LeapNotificationManager(val context: Context) {
 
     private val TAG by lazy { LeapNotificationManager::class.java.simpleName }
 
     companion object {
+        const val EXTRAS_REQUEST_CODE = "leap_notification_action_request_code"
+        const val REQUEST_CODE_LESSONS = 1
+        const val REQUEST_CODE_REVIEWS = 2
+        const val REQUEST_CODE_LESSONS_AND_REVIEWS = 3
+
         private const val NOTIFICATION_CHANNEL_LESSONS_ID = "channel_id_lessons"
         private const val NOTIFICATION_CHANNEL_REVIEWS_ID = "channel_id_reviews"
         private const val NOTIFICATION_CHANNEL_LESSONS_AND_REVIEWS_ID = "channel_id_lessons_reviews"
@@ -29,9 +36,26 @@ class LeapNotificationManager(val context: Context) {
         private const val PENDING_INTENT_REVIEWS = 101
         private const val PENDING_INTENT_LESSONS_AND_REVIEWS = 102
 
+        fun getRequestCode(summaryData: WKData.SummaryData): Int {
+            return if (summaryData.lessons.isNotEmpty()
+                && summaryData.lessons[0].hasAvailableLessons()
+                && summaryData.hasAvailableReviews()
+            ) {
+                REQUEST_CODE_LESSONS_AND_REVIEWS
+            } else if (summaryData.lessons.isNotEmpty()
+                && summaryData.lessons[0].hasAvailableLessons()
+            ) {
+                REQUEST_CODE_LESSONS
+            } else if (summaryData.hasAvailableReviews()) {
+                REQUEST_CODE_REVIEWS
+            } else {
+                -1
+            }
+        }
+
         fun sendNotification(context: Context, requestCode: Int) {
             val intent = Intent(context, MainActivity::class.java)
-                .putExtra(MainActivity.EXTRAS_REQUEST_CODE, requestCode)
+                .putExtra(EXTRAS_REQUEST_CODE, requestCode)
 
             var channelId = ""
             var notificationId = -1
@@ -40,21 +64,21 @@ class LeapNotificationManager(val context: Context) {
             var text = ""
 
             when (requestCode) {
-                MainActivity.REQUEST_CODE_LESSONS -> {
+                REQUEST_CODE_LESSONS -> {
                     channelId = NOTIFICATION_CHANNEL_LESSONS_ID
                     notificationId = NOTIFICATION_ID_LESSONS
                     pendingIntentCode = PENDING_INTENT_LESSONS
                     title = context.getString(R.string.notification_title_lessons)
                     text = context.getString(R.string.notification_text_lessons)
                 }
-                MainActivity.REQUEST_CODE_REVIEWS -> {
+                REQUEST_CODE_REVIEWS -> {
                     channelId = NOTIFICATION_CHANNEL_REVIEWS_ID
                     notificationId = NOTIFICATION_ID_REVIEWS
                     pendingIntentCode = PENDING_INTENT_REVIEWS
                     title = context.getString(R.string.notification_title_reviews)
                     text = context.getString(R.string.notification_text_reviews)
                 }
-                MainActivity.REQUEST_CODE_LESSONS_AND_REVIEWS -> {
+                REQUEST_CODE_LESSONS_AND_REVIEWS -> {
                     channelId = NOTIFICATION_CHANNEL_LESSONS_AND_REVIEWS_ID
                     notificationId = NOTIFICATION_ID_LESSONS_AND_REVIEWS
                     pendingIntentCode = PENDING_INTENT_LESSONS_AND_REVIEWS
