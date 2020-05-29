@@ -17,11 +17,11 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.leapsoftware.leapforwanikani.dashboard.WebDelegate
-import com.leapsoftware.leapforwanikani.data.source.remote.api.WKData
 import com.leapsoftware.leapforwanikani.workers.SummaryNotifyWorker
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.work.ExistingPeriodicWorkPolicy
 import com.google.android.material.snackbar.Snackbar
 import com.leapsoftware.leapforwanikani.data.LeapResult
 import com.leapsoftware.leapforwanikani.data.source.WaniKaniRepository
@@ -29,7 +29,6 @@ import com.leapsoftware.leapforwanikani.data.source.remote.api.WKReport
 import com.leapsoftware.leapforwanikani.utils.LeapNotificationManager
 import com.leapsoftware.leapforwanikani.utils.PreferencesManager
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -46,7 +45,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setActionBarDrawerToggle()
         setNavControllerFragment()
         LeapNotificationManager(this).createNotificationChannels()
-        SummaryNotifyWorker.enqueueUniquePeriodicWork(this)
+        SummaryNotifyWorker.enqueueUniquePeriodicWork(this, ExistingPeriodicWorkPolicy.KEEP)
+        showNewFeatureSnackbar(BuildConfig.VERSION_CODE)
 
         val repository = WaniKaniRepository.getInstance(this)
         val factory = ViewModelFactory(repository)
@@ -94,6 +94,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.nav_clear_cache -> {
                 mainViewModel.clearCache()
+            }
+            R.id.nav_notifications -> {
+                mainNavDrawerAdapter.showNotificationPrefs(this)
             }
             R.id.nav_get_key -> {
                 WebDelegate.openApiKey(this)
@@ -192,6 +195,26 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             })
         } else {
             // no-op. Users should swipe to refresh
+        }
+    }
+
+    private fun showNewFeatureSnackbar(versionCode: Int) {
+        val message = when (versionCode) {
+            110 -> {
+                getString(R.string.new_features_110)
+            }
+            else -> ""
+        }
+        if (!PreferencesManager.getHasUserOnboarded(this, versionCode)) {
+            val newFeatureSnackbar = Snackbar.make(
+                findViewById<CoordinatorLayout>(R.id.coordinator_layout),
+                message,
+                Snackbar.LENGTH_INDEFINITE
+            )
+            newFeatureSnackbar.setAction(resources.getString(android.R.string.ok)) {
+                PreferencesManager.setHasUserOnboarded(this, true, versionCode)
+            }
+            newFeatureSnackbar.show()
         }
     }
 

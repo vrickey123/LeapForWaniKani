@@ -7,6 +7,7 @@ import com.leapsoftware.leapforwanikani.networking.WKApiResponse
 import com.leapsoftware.leapforwanikani.utils.LeapNotificationManager
 import com.leapsoftware.leapforwanikani.MainActivity
 import com.leapsoftware.leapforwanikani.data.source.WaniKaniRepository
+import com.leapsoftware.leapforwanikani.utils.PreferencesManager
 import kotlinx.coroutines.coroutineScope
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -25,19 +26,21 @@ class SummaryNotifyWorker(
     companion object {
         const val PERIODIC_WORK_REQUEST_UNIQUE_NAME_SUMMARY = "leap_wanikani_periodic_work_summary"
 
-        fun enqueueUniquePeriodicWork(context: Context) {
+        fun enqueueUniquePeriodicWork(context: Context, existingPeriodicWorkPolicy: ExistingPeriodicWorkPolicy) {
             val constraints = Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build()
 
+            val notificationPref = PreferencesManager.getNotificationPref(context).toLong()
+
             val summaryWorkRequest =
-                PeriodicWorkRequestBuilder<SummaryNotifyWorker>(1, TimeUnit.HOURS)
+                PeriodicWorkRequestBuilder<SummaryNotifyWorker>(notificationPref, TimeUnit.HOURS)
                     .setConstraints(constraints)
                     .build()
 
             WorkManager.getInstance(context).enqueueUniquePeriodicWork(
                 PERIODIC_WORK_REQUEST_UNIQUE_NAME_SUMMARY,
-                ExistingPeriodicWorkPolicy.KEEP,
+                existingPeriodicWorkPolicy,
                 summaryWorkRequest
             )
         }

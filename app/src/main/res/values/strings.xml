@@ -53,6 +53,7 @@
     <string name="nav_drawer_about">About</string>
     <string name="nav_drawer_wk_community">WaniKani Community</string>
     <string name="nav_drawer_github">GitHub</string>
+    <string name="nav_drawer_notifications">Notifications</string>
     <string name="nav_drawer_get_api_key">Get API V2 Key</string>
     <string name="nav_drawer_api_key">API Key</string>
     <string name="nav_drawer_wanikani_terms">WaniKani Terms</string>
@@ -63,10 +64,12 @@
     <string name="dialog_api_key_title">Enter API Key</string>
     <string name="dialog_api_key_message">You can get an API key from your profile settings on WaniKani.com</string>
     <string name="dialog_api_key_positive_button">OK</string>
+    <string name="dialog_notification_prefs">Notification Preferences</string>
 
     <!-- Snackbar -->
     <string name="offline_message">Offline</string>
     <string name="error_message">Response Error. Swipe to refresh or check login status.</string>
     <string name="login_error_message">Unauthorized. Check login status.</string>
+    <string name="new_features_110">This release includes bug fixes for notifications and Notification Preferences in the Nav Drawer.</string>
 
 </resources>
