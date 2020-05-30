@@ -25,7 +25,7 @@ Let's look at the data flow for a [Summary](https://docs.api.wanikani.com/201707
 
 ### Fragment (Make Request)
 Make a request to refresh our data (summary, assignments, etc.) from `DashboardFragment#onResume`.
-```
+```kotlin
 override fun onResume() {
         super.onResume()
         dashboardViewModel.refreshData()
@@ -34,7 +34,7 @@ override fun onResume() {
 
 ### ViewModel (Make Request)
 Launch the request using the `DashboardViewModel#viewModelScope` that will cancel the coroutine automatically once the ViewModel's lifecycle owner (the Fragment) is destroyed.
-```
+```kotlin
 fun refreshData() {
         viewModelScope.launch {
             _summary.value = waniKaniRepository.getSummary()
@@ -46,7 +46,7 @@ fun refreshData() {
 ### Repository (Get Local or Remote)
 The Repository layer is reponsible for returning local or remote data. Note that `WKApiResponse.ApiNotModified` returns local data. (See E-tags and Conditional Requests)
 
-```
+```kotlin
     override suspend fun getSummary(): LeapResult<WKReport.Summary> {
         return withContext(ioDispatcher) {
             return@withContext fetchSummaryRemoteOrLocal()
@@ -92,14 +92,14 @@ The Repository layer is reponsible for returning local or remote data. Note that
 
 #### Remote
 `WKRemoteDataSource` wraps a retrofit `Response` with `WKApiResponse` to handle modified/not modified API responses.
-```
+```kotlin
 interface WKRemoteDataSource {
     suspend fun getSummaryAsync(): WKApiResponse<WKReport.Summary>
 }
 ```
 
 The Retrofit `WaniKaniApi` implements network requests.
-```
+```kotlin
 interface WaniKaniApi {
     @GET("summary")
     suspend fun getSummaryAsync():Response<WKReport.Summary>
@@ -108,13 +108,13 @@ interface WaniKaniApi {
 
 #### Local
 Async requests to a Room database are routed through `WKLocalDataSource` using `suspend` functions.
-```
+```kotlin
 interface WKLocalDataSource {
     suspend fun getSummary(): LeapResult<WKReport.Summary>
 }
 ```
 
-```
+```kotlin
 interface WKReportDao {
     @Query("SELECT * FROM summary")
     suspend fun getSummary(): WKReport.Summary?
@@ -127,7 +127,7 @@ If their data has not changed, a `304 Not Modified` response is returned to the 
 
 ### ViewModel (Observe Response)
 The `LiveData<Summary>` emits changes when the local or remote data source is triggered.
-```
+```kotlin
     val liveDataSummary: LiveData<LeapResult<WKReport.Summary>> =
         liveData {
             emitSource(_summary)
@@ -137,7 +137,7 @@ The `LiveData<Summary>` emits changes when the local or remote data source is tr
 ### Fragment (Observe Response)
 The `DashboardFragment` observes the `LiveData<WKReport.Summary>` and reacts when a new summary is emitted. It updates the UI based on a `LeapResult.Success`,`LeapResult.Error`, `LeapResult.Loading`, or `LeapResult.Offline` response so that a user's state is accurately represented.
 
-```
+```kotlin
 dashboardViewModel.liveDataSummary.observe(viewLifecycleOwner, Observer { summary ->
             when (summary) {
                 is LeapResult.Success<WKReport.Summary> -> {
@@ -183,7 +183,7 @@ Before starting work, please the see the [open issues](https://github.com/vricke
 
 <!-- VERSIONING -->
 ## Versioning
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags).
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see [Releases](https://github.com/vrickey123/LeapForWaniKani/releases).
 
 <!-- LICENSE -->
 ## License
@@ -191,7 +191,7 @@ Distributed under the GNU General Public License.
 
 In short, this copyleft lisence allows you to use this code in your app as long as you also distribute it as an open-source project under the same GNU GPLv3 license. If you are Tofugu/WaniKani and would like to use it, please contact us.
 
-See [LICENSE](https://github.com/vrickey123/LeapForWaniKani/blob/chore/update-readme/LICENSE.md) for more information.
+See [LICENSE](https://github.com/vrickey123/LeapForWaniKani/blob/develop/LICENSE.md) for more information.
 
 <!-- CONTACT -->
 ## Contact
