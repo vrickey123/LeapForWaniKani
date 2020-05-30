@@ -200,7 +200,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun showNewFeatureSnackbar(versionCode: Int) {
         val message = when (versionCode) {
-            110 -> {
+            110, 111 -> {
                 getString(R.string.new_features_110)
             }
             else -> ""
