@@ -67,7 +67,7 @@ class MainNavDrawerAdapter(
     fun showNotificationPrefs(context: Context) {
         val notifiPrefOptions = Array<String>(25) {
             if (it == 0) {
-                "Disabled"
+                "Every 15 minutes" // the PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS
             } else {
                 String.format("Every %d hours", it)
             }
