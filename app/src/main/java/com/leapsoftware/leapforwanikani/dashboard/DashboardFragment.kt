@@ -269,19 +269,8 @@ class DashboardFragment : Fragment() {
         dashboardViewModel.liveDataReviewForecast.observe(viewLifecycleOwner, Observer { reviewForecast ->
             when (reviewForecast) {
                 is LeapResult.Success<ReviewForecast> -> {
-                    Log.d(TAG, "forecast total review count = " + reviewForecast.resultData.totalReviewCount)
                     todayHourlyForecastAdapter.submitList(reviewForecast.resultData.forecastToday)
                     tomorrowHourlyForecastAdapter.submitList(reviewForecast.resultData.forecastTomorrow)
-                    progressBar.visibility = View.GONE
-                }
-                is LeapResult.Error -> {
-                    progressBar.visibility = View.GONE
-                }
-                is LeapResult.Loading -> {
-                    progressBar.visibility = View.VISIBLE
-                }
-                is LeapResult.Offline -> {
-                    progressBar.visibility = View.GONE
                 }
             }
         })
