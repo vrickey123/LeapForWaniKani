@@ -19,6 +19,7 @@ import com.leapsoftware.leapforwanikani.MainViewModel
 import com.leapsoftware.leapforwanikani.R
 import com.leapsoftware.leapforwanikani.ViewModelFactory
 import com.leapsoftware.leapforwanikani.data.LeapResult
+import com.leapsoftware.leapforwanikani.data.models.ReviewForecast
 import com.leapsoftware.leapforwanikani.data.source.WaniKaniRepository
 import com.leapsoftware.leapforwanikani.data.source.remote.api.WKReport
 import com.leapsoftware.leapforwanikani.data.source.remote.exceptions.AuthenticationException
@@ -242,7 +243,21 @@ class DashboardFragment : Fragment() {
         })
 
         dashboardViewModel.liveDataReviewForecast.observe(viewLifecycleOwner, Observer { reviewForecast ->
-            Log.d(TAG, "forecast total review count = " + reviewForecast.totalReviewCount)
+            when (reviewForecast) {
+                is LeapResult.Success<ReviewForecast> -> {
+                    Log.d(TAG, "forecast total review count = " + reviewForecast.resultData.totalReviewCount)
+                    progressBar.visibility = View.GONE
+                }
+                is LeapResult.Error -> {
+                    progressBar.visibility = View.GONE
+                }
+                is LeapResult.Loading -> {
+                    progressBar.visibility = View.VISIBLE
+                }
+                is LeapResult.Offline -> {
+                    progressBar.visibility = View.GONE
+                }
+            }
         })
 
         mainViewModel.onClearCache.observe(viewLifecycleOwner, Observer {

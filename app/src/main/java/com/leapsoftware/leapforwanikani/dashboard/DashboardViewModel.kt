@@ -1,6 +1,7 @@
 package com.leapsoftware.leapforwanikani.dashboard
 
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.*
 import com.leapsoftware.leapforwanikani.data.LeapResult
 import com.leapsoftware.leapforwanikani.data.models.HourlyForecast
@@ -84,12 +85,21 @@ class DashboardViewModel(
         }
     }
 
-    val liveDataReviewForecast: LiveData<ReviewForecast> = Transformations.switchMap(_summary) {
+    val liveDataReviewForecast: LiveData<LeapResult<ReviewForecast>> = Transformations.switchMap(_summary) {
         liveData {
             when (it) {
                 is LeapResult.Success<WKReport.Summary> -> {
                     val reviewForecast = ReviewForecast.create(it.resultData)
-                    emit(reviewForecast)
+                    emit(LeapResult.Success(reviewForecast))
+                }
+                is LeapResult.Error -> {
+                    emit(LeapResult.Error(it.exception))
+                }
+                is LeapResult.Loading -> {
+                    emit(LeapResult.Loading)
+                }
+                is LeapResult.Offline -> {
+                    emit(LeapResult.Offline)
                 }
             }
         }
