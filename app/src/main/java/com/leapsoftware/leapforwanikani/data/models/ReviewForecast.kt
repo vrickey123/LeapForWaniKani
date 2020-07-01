@@ -17,9 +17,10 @@ data class ReviewForecast(
                 // Terrible Java Data Formatting API for the user-facing hourString
                 val sdf = SimpleDateFormat("h a", Locale.getDefault())
                 val hourOfTheDay = calendar.get(Calendar.HOUR)
+                val hourString: String = sdf.format(calendar.time)
+                // Round down to the nearest hour so that the hourString reads 11:00pm rather than 11:37pm
                 calendar.set(Calendar.HOUR, hourOfTheDay)
                 calendar.set(Calendar.MINUTE, 0)
-                val hourString: String = sdf.format(calendar.time)
                 // [0] are the reviews available now, [1] are the reviews in an hour, etc. 24 hours provided.
                 // Skip the first [0] reviews array since we want our forecast to begin one hour from now rather than the current review status
                 // Keep track of the hourString, additionalReviews added that hour, and totalReviewCount to create an HourlyForecase; i.e. a row in the UI
