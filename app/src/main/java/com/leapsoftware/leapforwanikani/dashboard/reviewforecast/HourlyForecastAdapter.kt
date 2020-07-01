@@ -22,7 +22,7 @@ class HourlyForecastAdapter() :
     override fun onBindViewHolder(holder: HourlyViewHolder, position: Int) {
         val hourlyForecast = getItem(position)
         holder.time.text = hourlyForecast.hour
-        holder.additionalCount.text = hourlyForecast.additionalReviews.toString()
+        holder.additionalCount.text = String.format("+%s", hourlyForecast.additionalReviews.toString())
         holder.totalCount.text = hourlyForecast.totalReviewCount.toString()
         val constraintSet = ConstraintSet()
         val width = HourlyForecast.calculatePercentIncrease(hourlyForecast.additionalReviews, hourlyForecast.totalReviewCount)
