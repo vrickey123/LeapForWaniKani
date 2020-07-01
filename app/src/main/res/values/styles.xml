@@ -49,7 +49,7 @@
     </style>
 
     <style name="Dashboard.Title">
-        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline4</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline5</item>
     </style>
 
     <style name="Dashboard.Subtitle" parent="">
