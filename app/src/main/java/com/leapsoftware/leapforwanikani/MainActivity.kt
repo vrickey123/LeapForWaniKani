@@ -4,30 +4,30 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Network
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.GravityCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
-import com.google.android.material.navigation.NavigationView
-import com.leapsoftware.leapforwanikani.dashboard.WebDelegate
-import com.leapsoftware.leapforwanikani.workers.SummaryNotifyWorker
-import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.work.ExistingPeriodicWorkPolicy
+import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
+import com.leapsoftware.leapforwanikani.dashboard.WebDelegate
 import com.leapsoftware.leapforwanikani.data.LeapResult
 import com.leapsoftware.leapforwanikani.data.source.WaniKaniRepository
 import com.leapsoftware.leapforwanikani.data.source.remote.api.WKReport
 import com.leapsoftware.leapforwanikani.utils.LeapNotificationManager
 import com.leapsoftware.leapforwanikani.utils.PreferencesManager
+import com.leapsoftware.leapforwanikani.workers.SummaryNotifyWorker
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -95,8 +95,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_clear_cache -> {
                 mainViewModel.clearCache()
             }
-            R.id.nav_notifications -> {
+            R.id.nav_notification_frequency -> {
                 mainNavDrawerAdapter.showNotificationPrefs(this)
+            }
+            R.id.nav_notification_categories -> {
+                mainNavDrawerAdapter.openChannelAppSystemSettings(this)
             }
             R.id.nav_get_key -> {
                 WebDelegate.openApiKey(this)

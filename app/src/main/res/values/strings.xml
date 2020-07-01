@@ -54,6 +54,8 @@
     <string name="nav_drawer_wk_community">WaniKani Community</string>
     <string name="nav_drawer_github">GitHub</string>
     <string name="nav_drawer_notifications">Notifications</string>
+    <string name="nav_drawer_notification_frequency">Frequency</string>
+    <string name="nav_drawer_notification_categories">Categories</string>
     <string name="nav_drawer_get_api_key">Get API V2 Key</string>
     <string name="nav_drawer_api_key">API Key</string>
     <string name="nav_drawer_wanikani_terms">WaniKani Terms</string>

@@ -21,9 +21,13 @@
     <item android:title="@string/nav_drawer_notifications">
         <menu>
             <item
-                android:id="@+id/nav_notifications"
+                android:id="@+id/nav_notification_frequency"
                 android:icon="@drawable/ic_notifications_black_24dp"
-                android:title="@string/nav_drawer_notifications"/>
+                android:title="@string/nav_drawer_notification_frequency"/>
+            <item
+                android:id="@+id/nav_notification_categories"
+                android:icon="@drawable/ic_settings_applications_24"
+                android:title="@string/nav_drawer_notification_categories"/>
         </menu>
     </item>
 

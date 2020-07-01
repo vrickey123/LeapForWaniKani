@@ -2,6 +2,9 @@ package com.leapsoftware.leapforwanikani
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.os.Build
+import android.provider.Settings
 import android.util.Log
 import android.widget.EditText
 import android.widget.LinearLayout
@@ -90,6 +93,18 @@ class MainNavDrawerAdapter(
                 checkedItem = which
             }
             .show()
+    }
+
+    fun openChannelAppSystemSettings(context: Context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
+                putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
+            }
+            context.startActivity(intent)
+        } else {
+            val intent = Intent(Settings.ACTION_APPLICATION_SETTINGS)
+            context.startActivity(intent)
+        }
     }
 
     fun showLoginView(activity: Activity) {
