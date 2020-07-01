@@ -25,6 +25,8 @@
     <string name="date_format_review_status">MMMM dd \'at\' HH:mm</string>
     <string name="review_status_format_minutes">Available in %d minutes</string>
     <string name="review_status_format_hours">Available in %d hours</string>
+    <string name="review_forecast_today">Today</string>
+    <string name="review_forecast_tomorrow">Tomorrow</string>
 
     <!-- Notifications -->
     <string name="notification_channel_lessons_name">Lessons</string>

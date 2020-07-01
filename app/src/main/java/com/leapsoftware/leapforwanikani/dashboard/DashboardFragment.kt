@@ -83,6 +83,8 @@ class DashboardFragment : Fragment() {
         val dashboardViewAdapter = DashboardViewAdapter(view.context)
         dashboardViewAdapter.bindLessonsTitle(lessonsCardView, getString(R.string.card_lessons_title))
         dashboardViewAdapter.bindReviewsTitle(reviewsCardView, getString(R.string.card_reviews_title))
+        dashboardViewAdapter.bindForecastTitleToday(reviewForecastToday, getString(R.string.review_forecast_today))
+        dashboardViewAdapter.bindForecastTitleTomorrow(reviewForecastTomorrow, getString(R.string.review_forecast_tomorrow))
 
         val swipeRefreshLayout = view.findViewById<SwipeRefreshLayout>(R.id.swipe_refresh_layout)
         swipeRefreshLayout.setOnRefreshListener({

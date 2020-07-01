@@ -1,6 +1,7 @@
 package com.leapsoftware.leapforwanikani.dashboard
 
 import android.content.Context
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.google.android.material.card.MaterialCardView
 import com.leapsoftware.leapforwanikani.R
@@ -52,6 +53,16 @@ class DashboardViewAdapter(val context: Context) {
 
     fun bindStageBurnedTextView(stageProgressCardView: MaterialCardView, burnedCount: Int) {
         stageProgressCardView.findViewById<TextView>(R.id.burned_count).text = burnedCount.toString()
+    }
+
+    fun bindForecastTitleToday(reviewForecastToday: LinearLayout, title: String) {
+        val reviewForecastTodayTitle = reviewForecastToday.findViewById<TextView>(R.id.review_forecast_daily_title)
+        reviewForecastTodayTitle.text = title
+    }
+
+    fun bindForecastTitleTomorrow(reviewForecastTomorrow: LinearLayout, title: String) {
+        val reviewForecastTomorrowTitle = reviewForecastTomorrow.findViewById<TextView>(R.id.review_forecast_daily_title)
+        reviewForecastTomorrowTitle.text = title
     }
 
     fun getNextReviewStatusMessage(nextReviewsAtDate: Date?) : String {
