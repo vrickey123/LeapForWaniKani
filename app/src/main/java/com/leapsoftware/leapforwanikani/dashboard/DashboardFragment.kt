@@ -12,12 +12,15 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.snackbar.Snackbar
 import com.leapsoftware.leapforwanikani.MainViewModel
 import com.leapsoftware.leapforwanikani.R
 import com.leapsoftware.leapforwanikani.ViewModelFactory
+import com.leapsoftware.leapforwanikani.dashboard.reviewforecast.HourlyForecastAdapter
 import com.leapsoftware.leapforwanikani.data.LeapResult
 import com.leapsoftware.leapforwanikani.data.models.ReviewForecast
 import com.leapsoftware.leapforwanikani.data.source.WaniKaniRepository
@@ -63,6 +66,11 @@ class DashboardFragment : Fragment() {
         val stageProgressCardView = view.findViewById<MaterialCardView>(R.id.stage_progress_card_included)
         val progressBar = view.findViewById<ProgressBar>(R.id.dashboard_progress_bar)
 
+        val recyclerView = view.findViewById<RecyclerView>(R.id.review_forcast_recycler_view)
+        val hourlyForecastAdapter = HourlyForecastAdapter()
+        recyclerView.adapter = hourlyForecastAdapter
+        recyclerView.layoutManager = LinearLayoutManager(context)
+
         val dashboardViewAdapter = DashboardViewAdapter(view.context)
         dashboardViewAdapter.bindLessonsTitle(lessonsCardView, getString(R.string.card_lessons_title))
         dashboardViewAdapter.bindReviewsTitle(reviewsCardView, getString(R.string.card_reviews_title))
@@ -90,7 +98,7 @@ class DashboardFragment : Fragment() {
 
         subscribeToUi(
             dashboardViewAdapter, availableStatus, lessonsCardView, reviewsCardView,
-            stageProgressCardView, progressBar, errorSnackbar
+            stageProgressCardView, progressBar, errorSnackbar, hourlyForecastAdapter
         )
     }
 
@@ -102,7 +110,7 @@ class DashboardFragment : Fragment() {
     private fun subscribeToUi(adapter: DashboardViewAdapter, availableStatus: TextView,
                               lessonsCardView: MaterialCardView, reviewsCardView: MaterialCardView,
                               stageProgressCardView: MaterialCardView, progressBar: ProgressBar,
-                              errorSnackbar: Snackbar) {
+                              errorSnackbar: Snackbar, hourlyForecastAdapter: HourlyForecastAdapter) {
         progressBar.visibility = View.VISIBLE
 
         dashboardViewModel.liveDataSummary.observe(viewLifecycleOwner, Observer { summary ->
@@ -246,6 +254,7 @@ class DashboardFragment : Fragment() {
             when (reviewForecast) {
                 is LeapResult.Success<ReviewForecast> -> {
                     Log.d(TAG, "forecast total review count = " + reviewForecast.resultData.totalReviewCount)
+                    hourlyForecastAdapter.submitList(reviewForecast.resultData.forecast)
                     progressBar.visibility = View.GONE
                 }
                 is LeapResult.Error -> {
