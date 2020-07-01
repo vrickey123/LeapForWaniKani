@@ -25,6 +25,11 @@
         <item name="cardElevation">2dp</item>
     </style>
 
+    <style name="Dashboard.Card.Stage">
+        <item name="cardElevation">0dp</item>
+        <item name="android:layout_margin">8dp</item>
+    </style>
+
     <style name="Dashboard.Title">
         <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline4</item>
     </style>
