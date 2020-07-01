@@ -7,18 +7,22 @@
 
     <TextView
         android:id="@+id/review_forecast_daily_title"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Review Forecast"/>
+        android:text="@string/review_forecast_title"/>
 
     <include
         android:id="@+id/review_forecast_today"
+        android:layout_marginTop="@dimen/inner_margin"
         layout="@layout/review_forecast_daily"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <include
         android:id="@+id/review_forecast_tomorrow"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginBottom="4dp"
         layout="@layout/review_forecast_daily"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

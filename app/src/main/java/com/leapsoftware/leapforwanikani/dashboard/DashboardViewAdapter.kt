@@ -3,6 +3,7 @@ package com.leapsoftware.leapforwanikani.dashboard
 import android.content.Context
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.card.MaterialCardView
 import com.leapsoftware.leapforwanikani.R
 import java.text.SimpleDateFormat
@@ -35,32 +36,32 @@ class DashboardViewAdapter(val context: Context) {
         reviewsTitle.text = title
     }
 
-    fun bindStageApprenticeTextView(stageProgressCardView: MaterialCardView, countApprentice: Int) {
-        stageProgressCardView.findViewById<TextView>(R.id.apprentice_count).text = countApprentice.toString()
+    fun bindStageApprenticeTextView(stageProgress: ConstraintLayout, countApprentice: Int) {
+        stageProgress.findViewById<TextView>(R.id.apprentice_count).text = countApprentice.toString()
     }
 
-    fun bindStageGuruTextView(stageProgressCardView: MaterialCardView, countGuru: Int) {
-        stageProgressCardView.findViewById<TextView>(R.id.guru_count).text = countGuru.toString()
+    fun bindStageGuruTextView(stageProgress: ConstraintLayout, countGuru: Int) {
+        stageProgress.findViewById<TextView>(R.id.guru_count).text = countGuru.toString()
     }
 
-    fun bindStageMasterTextView(stageProgressCardView: MaterialCardView, masterCount: Int) {
-        stageProgressCardView.findViewById<TextView>(R.id.master_count).text = masterCount.toString()
+    fun bindStageMasterTextView(stageProgress: ConstraintLayout, masterCount: Int) {
+        stageProgress.findViewById<TextView>(R.id.master_count).text = masterCount.toString()
     }
 
-    fun bindStageEnlightenedTextView(stageProgressCardView: MaterialCardView, enlightenedCount: Int) {
-        stageProgressCardView.findViewById<TextView>(R.id.enlightened_count).text = enlightenedCount.toString()
+    fun bindStageEnlightenedTextView(stageProgress: ConstraintLayout, enlightenedCount: Int) {
+        stageProgress.findViewById<TextView>(R.id.enlightened_count).text = enlightenedCount.toString()
     }
 
-    fun bindStageBurnedTextView(stageProgressCardView: MaterialCardView, burnedCount: Int) {
-        stageProgressCardView.findViewById<TextView>(R.id.burned_count).text = burnedCount.toString()
+    fun bindStageBurnedTextView(stageProgress: ConstraintLayout, burnedCount: Int) {
+        stageProgress.findViewById<TextView>(R.id.burned_count).text = burnedCount.toString()
     }
 
-    fun bindForecastTitleToday(reviewForecastToday: LinearLayout, title: String) {
+    fun bindForecastTitleToday(reviewForecastToday: MaterialCardView, title: String) {
         val reviewForecastTodayTitle = reviewForecastToday.findViewById<TextView>(R.id.review_forecast_daily_title)
         reviewForecastTodayTitle.text = title
     }
 
-    fun bindForecastTitleTomorrow(reviewForecastTomorrow: LinearLayout, title: String) {
+    fun bindForecastTitleTomorrow(reviewForecastTomorrow: MaterialCardView, title: String) {
         val reviewForecastTomorrowTitle = reviewForecastTomorrow.findViewById<TextView>(R.id.review_forecast_daily_title)
         reviewForecastTomorrowTitle.text = title
     }

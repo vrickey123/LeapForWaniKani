@@ -9,8 +9,11 @@
 
     <TextView
         android:id="@+id/review_forecast_hourly_time"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/inner_margin"
+        android:layout_marginBottom="@dimen/inner_margin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -19,19 +22,22 @@
     <View
         android:id="@+id/review_forecast_hourly_bar"
         android:layout_width="0dp"
-        android:layout_height="4dp"
+        android:layout_height="8dp"
+        android:layout_margin="@dimen/inner_margin"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintWidth_percent="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/review_forecast_hourly_time"
         app:layout_constraintRight_toLeftOf="@+id/review_forecast_hourly_additional"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/colorPrimaryDark" />
+        android:background="@color/wkGreen" />
 
     <TextView
         android:id="@+id/review_forecast_hourly_additional"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/inner_margin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/review_forecast_hourly_total"
         app:layout_constraintTop_toTopOf="parent"
@@ -39,8 +45,11 @@
 
     <TextView
         android:id="@+id/review_forecast_hourly_total"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/inner_margin"
+        android:layout_marginBottom="@dimen/inner_margin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
