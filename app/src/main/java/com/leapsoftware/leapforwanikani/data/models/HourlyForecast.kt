@@ -1,6 +1,7 @@
 package com.leapsoftware.leapforwanikani.data.models
 
-data class ReviewForecast(
-    val forecast: List<HourlyForecast>,
+data class HourlyForecast(
+    val hour: String,
+    val additionalReviews: Int,
     val totalReviewCount: Int
 )
