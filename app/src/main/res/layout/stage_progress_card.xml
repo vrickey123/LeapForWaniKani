@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+
 
     <!-- A Constraint Layout keeps the layout hierarchy flat and prevent overdraw -->
     <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <!-- These guidelines create the WaniKani-style grid-column box that all views will align to -->
         <androidx.constraintlayout.widget.Guideline
@@ -38,6 +37,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@color/wkPink"
+            style="@style/Dashboard.Card.Stage.Left"
             app:layout_constraintBottom_toTopOf="@+id/stage_progress_33_guideline"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/stage_progress_vertical_guideline"
@@ -48,6 +48,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@color/wkPurple"
+            style="@style/Dashboard.Card.Stage.Right"
             app:layout_constraintBottom_toTopOf="@+id/stage_progress_33_guideline"
             app:layout_constraintLeft_toRightOf="@id/stage_progress_vertical_guideline"
             app:layout_constraintRight_toRightOf="parent"
@@ -58,6 +59,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@color/wkDarkBlue"
+            style="@style/Dashboard.Card.Stage.Left"
             app:layout_constraintBottom_toTopOf="@+id/stage_progress_66_guideline"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/stage_progress_vertical_guideline"
@@ -68,6 +70,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@color/wkBlue"
+            style="@style/Dashboard.Card.Stage.Right"
             app:layout_constraintBottom_toTopOf="@+id/stage_progress_66_guideline"
             app:layout_constraintLeft_toRightOf="@id/stage_progress_vertical_guideline"
             app:layout_constraintRight_toRightOf="parent"
@@ -78,6 +81,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@color/wkGrey"
+            style="@style/Dashboard.Card.Stage"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -195,5 +199,3 @@
             app:layout_constraintTop_toBottomOf="@+id/burned_count" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-</com.google.android.material.card.MaterialCardView>

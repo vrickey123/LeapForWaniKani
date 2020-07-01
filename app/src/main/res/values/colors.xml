@@ -14,6 +14,8 @@
     <color name="wkDarkBlue">#3859dc</color>
     <color name="wkGrey">#4b4b4b</color>
     <color name="wkLightBlack">#292e3c</color>
+    <color name="wkGreen">#59c274</color>
+    <color name="wkSection">#f4f4f4</color>
     <color name="text_shadow_color">#18000000</color>
 
     <color name="error">#f44336</color> <!--material red 500-->

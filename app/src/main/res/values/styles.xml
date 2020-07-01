@@ -8,6 +8,7 @@
         <item name="colorAccent">@color/colorSecondaryDark</item>
         <item name="colorSecondary">@color/colorSecondary</item> <!-- FAB -->
         <item name="materialAlertDialogTheme">@style/AlertDialogTheme</item>
+        <item name="android:windowBackground">@color/wkSection</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -22,11 +23,33 @@
     <style name="Dashboard"></style>
 
     <style name="Dashboard.Card" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="cardElevation">4dp</item>
+    </style>
+
+    <style name="Dashboard.Card.Stage">
+        <item name="cardElevation">0dp</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
+    </style>
+
+    <style name="Dashboard.Card.Stage.Left">
+        <item name="android:layout_marginRight">4dp</item>
+    </style>
+
+    <style name="Dashboard.Card.Stage.Right">
+        <item name="android:layout_marginLeft">4dp</item>
+    </style>
+
+    <style name="Dashboard.Card.Stage.Burned">
+        <item name="android:layout_margin">4dp</item>
+    </style>
+
+    <style name="Dashboard.Card.Forecast">
         <item name="cardElevation">2dp</item>
     </style>
 
     <style name="Dashboard.Title">
-        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline4</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline5</item>
     </style>
 
     <style name="Dashboard.Subtitle" parent="">

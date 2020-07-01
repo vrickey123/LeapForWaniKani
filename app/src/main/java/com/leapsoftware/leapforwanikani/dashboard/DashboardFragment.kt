@@ -6,19 +6,25 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.snackbar.Snackbar
 import com.leapsoftware.leapforwanikani.MainViewModel
 import com.leapsoftware.leapforwanikani.R
 import com.leapsoftware.leapforwanikani.ViewModelFactory
+import com.leapsoftware.leapforwanikani.dashboard.reviewforecast.HourlyForecastAdapter
 import com.leapsoftware.leapforwanikani.data.LeapResult
+import com.leapsoftware.leapforwanikani.data.models.ReviewForecast
 import com.leapsoftware.leapforwanikani.data.source.WaniKaniRepository
 import com.leapsoftware.leapforwanikani.data.source.remote.api.WKReport
 import com.leapsoftware.leapforwanikani.data.source.remote.exceptions.AuthenticationException
@@ -59,12 +65,27 @@ class DashboardFragment : Fragment() {
         val availableStatus = view.findViewById<TextView>(R.id.available_status_textview)
         val lessonsCardView = view.findViewById<MaterialCardView>(R.id.lessons_card_included)
         val reviewsCardView = view.findViewById<MaterialCardView>(R.id.reviews_card_included)
-        val stageProgressCardView = view.findViewById<MaterialCardView>(R.id.stage_progress_card_included)
+        val stageProgress = view.findViewById<ConstraintLayout>(R.id.stage_progress_card_included)
         val progressBar = view.findViewById<ProgressBar>(R.id.dashboard_progress_bar)
+        val reviewForecast = view.findViewById<LinearLayout>(R.id.review_forecast_included)
+        val reviewForecastToday = reviewForecast.findViewById<MaterialCardView>(R.id.review_forecast_today)
+        val forecastTodayRecyclerView = reviewForecastToday.findViewById<RecyclerView>(R.id.review_forecast_daily_recycler_view)
+        val reviewForecastTomorrow = reviewForecast.findViewById<MaterialCardView>(R.id.review_forecast_tomorrow)
+        val forecastTomorrowRecyclerView = reviewForecastTomorrow.findViewById<RecyclerView>(R.id.review_forecast_daily_recycler_view)
+
+        val todayHourlyForecastAdapter = HourlyForecastAdapter()
+        forecastTodayRecyclerView.adapter = todayHourlyForecastAdapter
+        forecastTodayRecyclerView.layoutManager = LinearLayoutManager(context)
+
+        val tomorrowHourlyForecastAdapter = HourlyForecastAdapter()
+        forecastTomorrowRecyclerView.adapter = tomorrowHourlyForecastAdapter
+        forecastTomorrowRecyclerView.layoutManager = LinearLayoutManager(context)
 
         val dashboardViewAdapter = DashboardViewAdapter(view.context)
         dashboardViewAdapter.bindLessonsTitle(lessonsCardView, getString(R.string.card_lessons_title))
         dashboardViewAdapter.bindReviewsTitle(reviewsCardView, getString(R.string.card_reviews_title))
+        dashboardViewAdapter.bindForecastTitleToday(reviewForecastToday, getString(R.string.review_forecast_today))
+        dashboardViewAdapter.bindForecastTitleTomorrow(reviewForecastTomorrow, getString(R.string.review_forecast_tomorrow))
 
         val swipeRefreshLayout = view.findViewById<SwipeRefreshLayout>(R.id.swipe_refresh_layout)
         swipeRefreshLayout.setOnRefreshListener({
@@ -89,7 +110,8 @@ class DashboardFragment : Fragment() {
 
         subscribeToUi(
             dashboardViewAdapter, availableStatus, lessonsCardView, reviewsCardView,
-            stageProgressCardView, progressBar, errorSnackbar
+            stageProgress, progressBar, errorSnackbar, todayHourlyForecastAdapter,
+            tomorrowHourlyForecastAdapter
         )
     }
 
@@ -98,10 +120,13 @@ class DashboardFragment : Fragment() {
         dashboardViewModel.refreshData()
     }
 
-    private fun subscribeToUi(adapter: DashboardViewAdapter, availableStatus: TextView,
-                              lessonsCardView: MaterialCardView, reviewsCardView: MaterialCardView,
-                              stageProgressCardView: MaterialCardView, progressBar: ProgressBar,
-                              errorSnackbar: Snackbar) {
+    private fun subscribeToUi(
+        adapter: DashboardViewAdapter, availableStatus: TextView,
+        lessonsCardView: MaterialCardView, reviewsCardView: MaterialCardView,
+        stageProgress: ConstraintLayout, progressBar: ProgressBar,
+        errorSnackbar: Snackbar, todayHourlyForecastAdapter: HourlyForecastAdapter,
+        tomorrowHourlyForecastAdapter: HourlyForecastAdapter
+    ) {
         progressBar.visibility = View.VISIBLE
 
         dashboardViewModel.liveDataSummary.observe(viewLifecycleOwner, Observer { summary ->
@@ -154,7 +179,7 @@ class DashboardFragment : Fragment() {
         dashboardViewModel.liveDataCountApprentice.observe(viewLifecycleOwner, Observer { countApprentice ->
             when (countApprentice) {
                 is LeapResult.Success<Int> -> {
-                    adapter.bindStageApprenticeTextView(stageProgressCardView, countApprentice.resultData)
+                    adapter.bindStageApprenticeTextView(stageProgress, countApprentice.resultData)
                     progressBar.visibility = View.GONE
                 }
                 is LeapResult.Error -> {
@@ -172,7 +197,7 @@ class DashboardFragment : Fragment() {
         dashboardViewModel.liveDataCountGuru.observe(viewLifecycleOwner, Observer { countGuru ->
             when (countGuru) {
                 is LeapResult.Success<Int> -> {
-                    adapter.bindStageGuruTextView(stageProgressCardView, countGuru.resultData)
+                    adapter.bindStageGuruTextView(stageProgress, countGuru.resultData)
                     progressBar.visibility = View.GONE
                 }
                 is LeapResult.Error -> {
@@ -190,7 +215,7 @@ class DashboardFragment : Fragment() {
         dashboardViewModel.liveDataCountMaster.observe(viewLifecycleOwner, Observer { countMaster ->
             when (countMaster) {
                 is LeapResult.Success<Int> -> {
-                    adapter.bindStageMasterTextView(stageProgressCardView, countMaster.resultData)
+                    adapter.bindStageMasterTextView(stageProgress, countMaster.resultData)
                     progressBar.visibility = View.GONE
                 }
                 is LeapResult.Error -> {
@@ -208,7 +233,7 @@ class DashboardFragment : Fragment() {
         dashboardViewModel.liveDataCountEnlightened.observe(viewLifecycleOwner, Observer { countEnlightened ->
             when (countEnlightened) {
                 is LeapResult.Success<Int> -> {
-                    adapter.bindStageEnlightenedTextView(stageProgressCardView, countEnlightened.resultData)
+                    adapter.bindStageEnlightenedTextView(stageProgress, countEnlightened.resultData)
                     progressBar.visibility = View.GONE
                 }
                 is LeapResult.Error -> {
@@ -226,7 +251,7 @@ class DashboardFragment : Fragment() {
         dashboardViewModel.liveDataCountBurned.observe(viewLifecycleOwner, Observer { countBurned ->
             when (countBurned) {
                 is LeapResult.Success<Int> -> {
-                    adapter.bindStageBurnedTextView(stageProgressCardView, countBurned.resultData)
+                    adapter.bindStageBurnedTextView(stageProgress, countBurned.resultData)
                     progressBar.visibility = View.GONE
                 }
                 is LeapResult.Error -> {
@@ -237,6 +262,15 @@ class DashboardFragment : Fragment() {
                 }
                 is LeapResult.Offline -> {
                     progressBar.visibility = View.GONE
+                }
+            }
+        })
+
+        dashboardViewModel.liveDataReviewForecast.observe(viewLifecycleOwner, Observer { reviewForecast ->
+            when (reviewForecast) {
+                is LeapResult.Success<ReviewForecast> -> {
+                    todayHourlyForecastAdapter.submitList(reviewForecast.resultData.forecastToday)
+                    tomorrowHourlyForecastAdapter.submitList(reviewForecast.resultData.forecastTomorrow)
                 }
             }
         })

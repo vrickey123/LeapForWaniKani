@@ -1,13 +1,20 @@
 package com.leapsoftware.leapforwanikani.dashboard
 
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.*
-import com.leapsoftware.leapforwanikani.data.source.PagedAssignmentsSource
 import com.leapsoftware.leapforwanikani.data.LeapResult
+import com.leapsoftware.leapforwanikani.data.models.HourlyForecast
+import com.leapsoftware.leapforwanikani.data.models.ReviewForecast
+import com.leapsoftware.leapforwanikani.data.source.PagedAssignmentsSource
 import com.leapsoftware.leapforwanikani.data.source.WaniKaniRepository
 import com.leapsoftware.leapforwanikani.data.source.remote.api.WKReport
 import com.leapsoftware.leapforwanikani.data.source.remote.api.types.WKSrsStageType
+import com.leapsoftware.leapforwanikani.data.succeeded
 import kotlinx.coroutines.launch
+import java.text.DateFormat
+import java.text.ParseException
+import java.text.SimpleDateFormat
 import java.util.*
 
 /**
@@ -75,6 +82,26 @@ class DashboardViewModel(
         liveData {
             val count = waniKaniRepository.getCountAssignmentsBySrsStage(WKSrsStageType.burned)
             emit(count)
+        }
+    }
+
+    val liveDataReviewForecast: LiveData<LeapResult<ReviewForecast>> = Transformations.switchMap(_summary) {
+        liveData {
+            when (it) {
+                is LeapResult.Success<WKReport.Summary> -> {
+                    val reviewForecast = ReviewForecast.create(it.resultData)
+                    emit(LeapResult.Success(reviewForecast))
+                }
+                is LeapResult.Error -> {
+                    emit(LeapResult.Error(it.exception))
+                }
+                is LeapResult.Loading -> {
+                    emit(LeapResult.Loading)
+                }
+                is LeapResult.Offline -> {
+                    emit(LeapResult.Offline)
+                }
+            }
         }
     }
 
