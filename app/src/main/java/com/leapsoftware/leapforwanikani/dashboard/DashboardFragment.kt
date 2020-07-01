@@ -254,7 +254,7 @@ class DashboardFragment : Fragment() {
             when (reviewForecast) {
                 is LeapResult.Success<ReviewForecast> -> {
                     Log.d(TAG, "forecast total review count = " + reviewForecast.resultData.totalReviewCount)
-                    hourlyForecastAdapter.submitList(reviewForecast.resultData.forecast)
+                    hourlyForecastAdapter.submitList(reviewForecast.resultData.forecastToday)
                     progressBar.visibility = View.GONE
                 }
                 is LeapResult.Error -> {

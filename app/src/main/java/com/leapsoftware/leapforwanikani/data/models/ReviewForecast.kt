@@ -1,16 +1,19 @@
 package com.leapsoftware.leapforwanikani.data.models
 
+import android.text.format.DateUtils
 import com.leapsoftware.leapforwanikani.data.source.remote.api.WKReport
 import java.text.SimpleDateFormat
 import java.util.*
 
 data class ReviewForecast(
-    val forecast: List<HourlyForecast>,
+    val forecastToday: List<HourlyForecast>,
+    val forecastTomorrow: List<HourlyForecast>,
     val totalReviewCount: Int
 ) {
     companion object {
         fun create(wkSummary: WKReport.Summary): ReviewForecast {
-            val forecast = mutableListOf<HourlyForecast>()
+            val forecastToday = mutableListOf<HourlyForecast>()
+            val forecastTomorrow = mutableListOf<HourlyForecast>()
             val calendar = Calendar.getInstance(Locale.getDefault())
             var totalReviewCount: Int = 0
             for ((i, reviewsAtHour) in wkSummary.data.reviews.withIndex()) {
@@ -27,11 +30,15 @@ data class ReviewForecast(
                 totalReviewCount += reviewsAtHour.subject_ids.size
                 if ((i > 0) && reviewsAtHour.subject_ids.isNotEmpty()) {
                     val hourlyForecast = HourlyForecast(hourString, reviewsAtHour.subject_ids.size, totalReviewCount)
-                    forecast.add(hourlyForecast)
+                    if (DateUtils.isToday(calendar.timeInMillis)) {
+                        forecastToday.add(hourlyForecast)
+                    } else {
+                        forecastTomorrow.add(hourlyForecast)
+                    }
                 }
                 calendar.add(Calendar.HOUR, 1)
             }
-            return ReviewForecast(forecast, totalReviewCount)
+            return ReviewForecast(forecastToday, forecastTomorrow, totalReviewCount)
         }
     }
 }
