@@ -6,10 +6,10 @@ import com.leapsoftware.leapforwanikani.data.models.ReviewForecast
 
 class HourlyForecastDiffCallback: DiffUtil.ItemCallback<HourlyForecast>() {
     override fun areItemsTheSame(oldItem: HourlyForecast, newItem: HourlyForecast): Boolean {
-        TODO("Not yet implemented")
+        return false
     }
 
     override fun areContentsTheSame(oldItem: HourlyForecast, newItem: HourlyForecast): Boolean {
-        TODO("Not yet implemented")
+        return false
     }
 }
