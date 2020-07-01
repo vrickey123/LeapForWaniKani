@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -65,11 +66,19 @@ class DashboardFragment : Fragment() {
         val reviewsCardView = view.findViewById<MaterialCardView>(R.id.reviews_card_included)
         val stageProgressCardView = view.findViewById<MaterialCardView>(R.id.stage_progress_card_included)
         val progressBar = view.findViewById<ProgressBar>(R.id.dashboard_progress_bar)
+        val reviewForecast = view.findViewById<LinearLayout>(R.id.review_forecast_included)
+        val reviewForecastToday = reviewForecast.findViewById<LinearLayout>(R.id.review_forecast_today)
+        val forecastTodayRecyclerView = reviewForecastToday.findViewById<RecyclerView>(R.id.review_forecast_daily_recycler_view)
+        val reviewForecastTomorrow = reviewForecast.findViewById<LinearLayout>(R.id.review_forecast_tomorrow)
+        val forecastTomorrowRecyclerView = reviewForecastTomorrow.findViewById<RecyclerView>(R.id.review_forecast_daily_recycler_view)
 
-        val recyclerView = view.findViewById<RecyclerView>(R.id.review_forcast_recycler_view)
-        val hourlyForecastAdapter = HourlyForecastAdapter()
-        recyclerView.adapter = hourlyForecastAdapter
-        recyclerView.layoutManager = LinearLayoutManager(context)
+        val todayHourlyForecastAdapter = HourlyForecastAdapter()
+        forecastTodayRecyclerView.adapter = todayHourlyForecastAdapter
+        forecastTodayRecyclerView.layoutManager = LinearLayoutManager(context)
+
+        val tomorrowHourlyForecastAdapter = HourlyForecastAdapter()
+        forecastTomorrowRecyclerView.adapter = tomorrowHourlyForecastAdapter
+        forecastTomorrowRecyclerView.layoutManager = LinearLayoutManager(context)
 
         val dashboardViewAdapter = DashboardViewAdapter(view.context)
         dashboardViewAdapter.bindLessonsTitle(lessonsCardView, getString(R.string.card_lessons_title))
@@ -98,7 +107,8 @@ class DashboardFragment : Fragment() {
 
         subscribeToUi(
             dashboardViewAdapter, availableStatus, lessonsCardView, reviewsCardView,
-            stageProgressCardView, progressBar, errorSnackbar, hourlyForecastAdapter
+            stageProgressCardView, progressBar, errorSnackbar, todayHourlyForecastAdapter,
+            tomorrowHourlyForecastAdapter
         )
     }
 
@@ -107,10 +117,13 @@ class DashboardFragment : Fragment() {
         dashboardViewModel.refreshData()
     }
 
-    private fun subscribeToUi(adapter: DashboardViewAdapter, availableStatus: TextView,
-                              lessonsCardView: MaterialCardView, reviewsCardView: MaterialCardView,
-                              stageProgressCardView: MaterialCardView, progressBar: ProgressBar,
-                              errorSnackbar: Snackbar, hourlyForecastAdapter: HourlyForecastAdapter) {
+    private fun subscribeToUi(
+        adapter: DashboardViewAdapter, availableStatus: TextView,
+        lessonsCardView: MaterialCardView, reviewsCardView: MaterialCardView,
+        stageProgressCardView: MaterialCardView, progressBar: ProgressBar,
+        errorSnackbar: Snackbar, todayHourlyForecastAdapter: HourlyForecastAdapter,
+        tomorrowHourlyForecastAdapter: HourlyForecastAdapter
+    ) {
         progressBar.visibility = View.VISIBLE
 
         dashboardViewModel.liveDataSummary.observe(viewLifecycleOwner, Observer { summary ->
@@ -254,7 +267,8 @@ class DashboardFragment : Fragment() {
             when (reviewForecast) {
                 is LeapResult.Success<ReviewForecast> -> {
                     Log.d(TAG, "forecast total review count = " + reviewForecast.resultData.totalReviewCount)
-                    hourlyForecastAdapter.submitList(reviewForecast.resultData.forecastToday)
+                    todayHourlyForecastAdapter.submitList(reviewForecast.resultData.forecastToday)
+                    tomorrowHourlyForecastAdapter.submitList(reviewForecast.resultData.forecastTomorrow)
                     progressBar.visibility = View.GONE
                 }
                 is LeapResult.Error -> {

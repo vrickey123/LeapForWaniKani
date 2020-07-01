@@ -81,13 +81,14 @@
                 layout="@layout/stage_progress_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toTopOf="@+id/review_forcast_recycler_view"
+                app:layout_constraintBottom_toTopOf="@+id/review_forecast_included"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/lessons_card_included" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/review_forcast_recycler_view"
+            <include
+                android:id="@+id/review_forecast_included"
+                layout="@layout/review_forecast"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
