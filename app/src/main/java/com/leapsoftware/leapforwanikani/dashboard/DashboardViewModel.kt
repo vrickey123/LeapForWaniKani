@@ -2,12 +2,17 @@ package com.leapsoftware.leapforwanikani.dashboard
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.leapsoftware.leapforwanikani.data.source.PagedAssignmentsSource
 import com.leapsoftware.leapforwanikani.data.LeapResult
+import com.leapsoftware.leapforwanikani.data.models.ReviewForecast
+import com.leapsoftware.leapforwanikani.data.source.PagedAssignmentsSource
 import com.leapsoftware.leapforwanikani.data.source.WaniKaniRepository
 import com.leapsoftware.leapforwanikani.data.source.remote.api.WKReport
 import com.leapsoftware.leapforwanikani.data.source.remote.api.types.WKSrsStageType
+import com.leapsoftware.leapforwanikani.data.succeeded
 import kotlinx.coroutines.launch
+import java.text.DateFormat
+import java.text.ParseException
+import java.text.SimpleDateFormat
 import java.util.*
 
 /**
@@ -76,6 +81,38 @@ class DashboardViewModel(
             val count = waniKaniRepository.getCountAssignmentsBySrsStage(WKSrsStageType.burned)
             emit(count)
         }
+    }
+
+    val liveDataReviewForecast: LiveData<ReviewForecast> = Transformations.switchMap(_summary) {
+        liveData {
+            when (it) {
+                is LeapResult.Success<WKReport.Summary> -> {
+                    val reviewForecast = getForecast(it.resultData)
+                    emit(reviewForecast)
+                }
+            }
+        }
+    }
+
+    private fun getForecast(wkSummary: WKReport.Summary): ReviewForecast {
+        val forecast = mutableMapOf<String, Int>()
+        val calendar = Calendar.getInstance(Locale.getDefault())
+        var totalReviewCount: Int = 0
+        for ((i, reviewsAtHour) in wkSummary.data.reviews.withIndex()) {
+            val sdf = SimpleDateFormat("hh:mm a")
+            val hourOfTheDay = calendar.get(Calendar.HOUR)
+            calendar.set(Calendar.HOUR, hourOfTheDay)
+            calendar.set(Calendar.MINUTE, 0)
+            val hourString: String = sdf.format(calendar.time)
+            if (reviewsAtHour.subject_ids.isNotEmpty()) {
+                if (i > 0) {
+                    forecast.put(hourString, reviewsAtHour.subject_ids.size)
+                }
+                totalReviewCount += reviewsAtHour.subject_ids.size
+            }
+            calendar.add(Calendar.HOUR, 1)
+        }
+        return ReviewForecast(forecast, totalReviewCount)
     }
 
     fun refreshData() {

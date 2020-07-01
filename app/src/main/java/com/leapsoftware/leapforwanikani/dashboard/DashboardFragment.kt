@@ -241,6 +241,10 @@ class DashboardFragment : Fragment() {
             }
         })
 
+        dashboardViewModel.liveDataReviewForecast.observe(viewLifecycleOwner, Observer { reviewForecast ->
+            Log.d(TAG, "forecast total review count = " + reviewForecast.totalReviewCount)
+        })
+
         mainViewModel.onClearCache.observe(viewLifecycleOwner, Observer {
             dashboardViewModel.clearAssignmentsSource()
             dashboardViewModel.refreshData()
