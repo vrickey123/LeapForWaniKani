@@ -1,5 +1,5 @@
 # Leap For WaniKani
-<img src="https://github.com/vrickey123/LeapForWaniKani/blob/develop/docs/dashboard.png" width="360">
+<img src="https://github.com/vrickey123/LeapForWaniKani/blob/develop/docs/dashboard-1.png" width="360">
 
 <!-- ABOUT -->
 ## About
