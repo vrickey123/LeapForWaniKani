@@ -1,4 +1,15 @@
 # CHANGELOG
+## v1.2.1
+_2020-08-19_
+
+- Removed passed and srs_stage_name from Assignment model. These were removed without an API version update so the API version pin didn't catch it.
+- Destructive database migration used for deprecated fields since the WK server maintains user info and app can resync.
+- Room Database schema version 2
+
+## v1.2.0
+_2020-07-01_
+
+- Review forecast, notification categories in nav drawer, design update
 
 ## v1.1.1
 _2020-05-30_

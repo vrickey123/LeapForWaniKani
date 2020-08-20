@@ -12,7 +12,7 @@ import com.leapsoftware.leapforwanikani.data.source.remote.api.WKReport
 /* Stores WKResource and WKReport types. */
 @Database(
     entities = [WKReport.WKResource.Assignment::class, WKReport.Summary::class, WKReport.User::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 @TypeConverters(
@@ -40,6 +40,7 @@ abstract class WaniKaniDatabase : RoomDatabase() {
         private fun buildDatabase(context: Context): WaniKaniDatabase {
             return Room.databaseBuilder(context, WaniKaniDatabase::class.java,
                 WANIKANI_DATABASE_NAME)
+                .fallbackToDestructiveMigration()
                 .addCallback(object : RoomDatabase.Callback() {
                     override fun onCreate(db: SupportSQLiteDatabase) {
                         super.onCreate(db)
