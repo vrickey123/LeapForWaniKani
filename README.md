@@ -1,5 +1,8 @@
 # Leap For WaniKani
-<img src="https://github.com/vrickey123/LeapForWaniKani/blob/develop/docs/dashboard-1.png" width="360">
+Native Dashboard             |  Web Lessons
+:-------------------------:|:-------------------------:
+<img src="https://github.com/vrickey123/LeapForWaniKani/blob/develop/docs/dashboard-1.png" width="360">  |  <img src="https://github.com/vrickey123/LeapForWaniKani/blob/develop/docs/lessons-webview.png" width="360">
+
 
 <!-- ABOUT -->
 ## About
